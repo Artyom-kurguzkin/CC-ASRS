@@ -7,4 +7,4 @@ Cloud computing IOT project
 
 <br>
 
-Contributors: Mauro Turci, Alexandria Foss, Het Patel, Danil Sayus, Ajay Kishan
+Contributors: Mauro Turci, Alexandria Foss, Het Patel, Danil Sayus, Ajay Kishan, Artyom Kurguzkin
