@@ -21,7 +21,13 @@ kubectl describe deployment | grep Ports
 kubectl get services
 ```
 
-- external ip for nodered-service is now accessible from your broweser
+If your output is like this, your nodered should be working with mqtt now.
+
+![[https://1drv.ms/i/s!ApoVMlWO-u7ZgrQ-3TkdTovB6qt4EQ?e=4pcAQL]]
+
+- external ip for nodered-service is now accessible from your broweser. 
+
+I assume it is using google's CDN, because the load balancer is region-bounded, so you won't be able to access it from VPN connected to USA
 
 <br>
 
