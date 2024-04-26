@@ -116,15 +116,27 @@ void setup_wifi() {
 }
 
 
-
+// called by client.loop() 
+// Responsible for receiving mqtt messages. 
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
+  String stMessage;
+
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
+    stMessage += (char)payload[i];
   }
   Serial.println();
+
+  if(stMessage.charAt(0) == '0'){
+      Serial.print("retrieve item from shelf ( ");
+      Serial.print(stMessage.substring(1));
+      Serial.println(" )");
+      //if( retrieveAction(11) )
+      //  client.publish("testTopic", "1");
+    }
 }
 
 
@@ -195,10 +207,10 @@ void loop() {
   client.loop();
 
   unsigned long now = millis();
-  if (now - lastMsg > 2000) {
+  if (now - lastMsg > 30000) {
     lastMsg = now;
     ++value;
-    snprintf (msg, MSG_BUFFER_SIZE, "Hello World! #%ld", value);
+    snprintf (msg, MSG_BUFFER_SIZE, "I'm alive! #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
     client.publish("testTopic", msg);

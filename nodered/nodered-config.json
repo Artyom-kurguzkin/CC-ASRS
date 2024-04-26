@@ -99,5 +99,52 @@
         "x": 500,
         "y": 380,
         "wires": []
+    },
+    {
+        "id": "261f293afddb01c7",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "topic": "testTopic",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "ce684d0833c30503",
+        "x": 520,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "50b14f72df6e3efa",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "testTopic",
+        "payload": "011",
+        "payloadType": "str",
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "261f293afddb01c7"
+            ]
+        ]
     }
 ]
