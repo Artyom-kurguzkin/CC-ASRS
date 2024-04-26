@@ -11,3 +11,7 @@ In nodered's mqtt-in node there is a page for configureing `Server`, nxt changes
 
 <br>
 
+![mqttGuide1](https://github.com/Artyom-kurguzkin/CC-ASRS/assets/10873919/1e2810cd-2782-406e-b330-6c99ba09a9f6)
+
+<br>
+
