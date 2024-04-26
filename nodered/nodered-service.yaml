@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: nodered
+  ports:
+  - name: http
+    port: 80
+    targetPort: 1880
+  - name: mqtt
+    port: 1883
+    targetPort: 1883
+  - name: mqtt-tls
+    port: 8883
+    targetPort: 8883
+
+# https://medium.com/google-cloud/kubernetes-120-networking-basics-3b903f13093a
+# helpfull resource

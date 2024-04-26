@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodered-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodered
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      containers:
+      - name: nodered
+        image: nodered/node-red
+        ports:
+        - containerPort: 1880
+        - containerPort: 1883    # MQTT Port
+        - containerPort: 8883    # MQTT over TLS Port
