@@ -23,7 +23,8 @@ kubectl get services
 
 If your output is like this, your nodered should be working with mqtt now.
 
-![example](https://1drv.ms/i/s!ApoVMlWO-u7ZgrQ-3TkdTovB6qt4EQ?e=OPGMsc)
+![kubernetes config](https://github.com/Artyom-kurguzkin/CC-ASRS/assets/10873919/39b1ff32-ee94-4327-bfda-bb1d316434a3)
+
 
 - external ip for nodered-service is now accessible from your broweser. 
 
