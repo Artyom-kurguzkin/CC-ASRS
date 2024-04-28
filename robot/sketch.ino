@@ -134,8 +134,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
       Serial.print("retrieve item from shelf ( ");
       Serial.print(stMessage.substring(1));
       Serial.println(" )");
-      //if( retrieveAction(11) )
-      //  client.publish("testTopic", "1");
+      if( retrieveAction( stMessage.charAt(1), stMessage.charAt(2) ) ){
+        client.publish("testTopic", "1");
+      }
     }
 }
 
@@ -150,7 +151,7 @@ void reconnect() {
     if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) {
       Serial.println("connected!");
       // Once connected, publish an announcement…
-      client.publish("testTopic", "Hello World!");
+      client.publish("testTopic", "robot is connected!");
       // … and resubscribe
       client.subscribe("testTopic");
     } else {
@@ -165,18 +166,30 @@ void reconnect() {
 
 
 
+bool retrieveAction( int locationX, int locationY ){
+  // note, this needs more work for actual robot. 
+  currentPosition1 = moveToTarget(Stepper1, targetPosition1, currentPosition1);  
+  currentPosition2 = moveToTarget(Stepper2, targetPosition2, currentPosition2);    
+  currentPosition3 = moveToTarget(Stepper3, targetPosition3, currentPosition3);    
+  //currentPosition4 = moveToTarget(Stepper4, targetPosition4, currentPosition4); 
+  return true; 
+}
+
+
+
 // Function to move a stepper motor to its target position and return the new position  
 long moveToTarget(Stepper& stepper, long targetPosition, long& currentPosition) {  
-    long stepsToMove = targetPosition - currentPosition;  
+    long stepsToMove = targetPosition - currentPosition;
+    stepsToMove = +stepsToMove;
     if (stepsToMove > 0) {  
-        stepper.step(1);  
-        currentPosition++;  
-    } else if (stepsToMove < 0) {  
-        stepper.step(-1);  
-        currentPosition--;  
-    }  
+        for(int i = 0; i <= stepsToMove; i++){
+          stepper.step(1);  
+          currentPosition++;
+        }
+    }   
     return currentPosition;  
 } 
+
 
 
 
@@ -215,11 +228,6 @@ void loop() {
     Serial.println(msg);
     client.publish("testTopic", msg);
   }
-
-  //currentPosition1 = moveToTarget(Stepper1, targetPosition1, currentPosition1);  
-  //currentPosition2 = moveToTarget(Stepper2, targetPosition2, currentPosition2);    
-  //currentPosition3 = moveToTarget(Stepper3, targetPosition3, currentPosition3);    
-  //currentPosition4 = moveToTarget(Stepper4, targetPosition4, currentPosition4); 
 
   delay(1);
 }
