@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "author": "heru taufiqurrohman",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 148.7, "left": -110.6, "attrs": {} },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": -149.09,
+      "left": -671.12,
+      "attrs": { "arrow": "blue", "gearRatio": "3:1" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper2",
+      "top": -149.09,
+      "left": -75.92,
+      "attrs": { "arrow": "orange", "gearRatio": "3:1" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper3",
+      "top": -158.69,
+      "left": 260.08,
+      "attrs": { "arrow": "green", "gearRatio": "3:1" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper4",
+      "top": -149.09,
+      "left": -383.12,
+      "attrs": { "arrow": "red", "gearRatio": "3:1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX0", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX0", "$serialMonitor:TX", "", [] ],
+    [ "stepper1:A-", "esp:D26", "blue", [ "v0" ] ],
+    [ "stepper1:A+", "esp:D27", "blue", [ "v0" ] ],
+    [ "stepper1:B+", "esp:D14", "blue", [ "v0" ] ],
+    [ "stepper1:B-", "esp:D12", "blue", [ "v0" ] ],
+    [ "stepper2:A-", "esp:D21", "orange", [ "v0" ] ],
+    [ "stepper2:A+", "esp:D19", "orange", [ "v0" ] ],
+    [ "stepper2:B+", "esp:D18", "orange", [ "v0" ] ],
+    [ "stepper2:B-", "esp:D5", "orange", [ "v0" ] ],
+    [ "stepper3:A-", "esp:D23", "green", [ "v0" ] ],
+    [ "stepper3:A+", "esp:D22", "green", [ "v0" ] ],
+    [ "stepper3:B+", "esp:D4", "green", [ "v0" ] ],
+    [ "stepper3:B-", "esp:D2", "green", [ "v0" ] ],
+    [ "stepper4:B-", "esp:D33", "red", [ "v0" ] ],
+    [ "stepper4:B+", "esp:D32", "red", [ "v0" ] ],
+    [ "stepper4:A+", "esp:D35", "red", [ "v0" ] ],
+    [ "stepper4:A-", "esp:D34", "red", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
