@@ -26,7 +26,6 @@
     
   </head>
   <body>
-    <body>
       <form id="loginForm">
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" required><br><br>
@@ -35,8 +34,13 @@
           <button type="button" onclick="login()">Login</button>
       </form>
   
-      <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
+      <!--<script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth.js"></script>
+      
+      <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth-compat.js"></script>
+    -->
       <script>
           
   
@@ -44,25 +48,61 @@
             const app = firebase.app();
             console.log(app);
           });
-  
           function login() {
-              const email = document.getElementById("email").value;
-              const password = document.getElementById("password").value;
-              googleLogin(email, password);
-          }
-  
-          function googleLogin(email, password){
+            const emailField = document.getElementById("email");
+            const passwordField = document.getElementById("password");
+
+            // Trim the email address to remove leading and trailing whitespaces
+            const email = emailField.value.trim();
+            const password = passwordField.value;
+
+            // Validate email format
+            if (!validateEmail(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            googleLogin(email, password);
+        }
+
+        function googleLogin(email, password){
             firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
                 const user = result.user;
-                // Redirect to a specific URL after successful authentication
-                window.location.href = "http://34.151.86.177/ui/#!/0?socketid=pMvyjFUhqd_IyMAfAABJ"; // Change this to your desired URL
+                const userName = extractUserName(user.email); // Extract user name from email
+                // Redirect based on user name
+                if (userName.toLowerCase() === "alicepharmacist") {
+                    window.location.href = "http://34.151.86.177/ui/#!/0?socketid=HxzMq6Yc0o7lBZnNAABR";
+                } else if (userName.toLowerCase() === "bobstaff") {
+                    window.location.href = "http://34.151.86.177/ui/#!/1?socketid=HxzMq6Yc0o7lBZnNAABR";
+                } else {
+                    console.log("Unknown user, no redirection.");
+                }
             }).catch(error => {
                 console.error('Error:', error.message);
+                alert("Error: " + error.message);
             });
-          } 
+        }
+
+        // Function to extract user name from email
+        function extractUserName(email) {
+          console.log("Original Email:", email);
+          const atIndex = email.indexOf("@");
+          let userName;
+          if (atIndex !== -1) {
+            userName = email.slice(0, atIndex);
+          } else {
+            userName = email;
+          }
+          console.log("Extracted User Name:", userName);
+          return userName;
+        }
+
+        // Function to validate email format using regex
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        } 
       </script>
-  </body>
-  </html>
 
 
     <!--<button onclick="googleLogin()">Login</button>
