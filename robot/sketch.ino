@@ -1,7 +1,7 @@
 #include <WiFi.h>  
 #include <PubSubClient.h>
 #include <WiFiClientSecure.h>
-#include <Stepper.h> 
+#include <AccelStepper.h>
 
 
 
@@ -68,28 +68,24 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 //---------------------------------------
 // Step motor settigns
 //---------------------------------------
-float stepmax = 600;  
+#define dirPin1 12
+#define stepPin1 13
+
+#define dirPin2 27
+#define stepPin2 14
+
+#define dirPin3 25
+#define stepPin3 26
+
+#define dirPin4 32
+#define stepPin4 33
+
+
   
-// control pins on the board for each of the step-motors  
-Stepper Stepper1(stepmax, 12, 14, 27, 26);  
-Stepper Stepper2(stepmax, 21,19, 18, 5);  
-Stepper Stepper3(stepmax, 23,22, 4, 2);  
-Stepper Stepper4(stepmax, 33,32, 35, 34);  
-  
-long currentPosition1 = 0;  
-long currentPosition2 = 0;  
-long currentPosition3 = 0;  
-long currentPosition4 = 0;  
-  
-long targetPosition1 = 500;  
-long targetPosition2 = 400;  
-long targetPosition3 = 300;  
-long targetPosition4 = 200;  
-  
-float speed1 = 50;  
-float speed2 = 40;  
-float speed3 = 30;  
-float speed4 = 20; 
+AccelStepper stepper1(1, stepPin1, dirPin1); // Initialize the stepper library
+AccelStepper stepper2(1, stepPin2, dirPin2); 
+AccelStepper stepper3(1, stepPin3, dirPin3);
+AccelStepper stepper4(1, stepPin4, dirPin4);
 
 
 
@@ -99,11 +95,11 @@ void setup_wifi() {
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+ // WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password, 6);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(100);
     Serial.print(".");
   }
 
@@ -113,31 +109,6 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-}
-
-
-// called by client.loop() 
-// Responsible for receiving mqtt messages. 
-void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  String stMessage;
-
-  for (int i = 0; i < length; i++) {
-    Serial.print((char)payload[i]);
-    stMessage += (char)payload[i];
-  }
-  Serial.println();
-
-  if(stMessage.charAt(0) == '0'){
-      Serial.print("retrieve item from shelf ( ");
-      Serial.print(stMessage.substring(1));
-      Serial.println(" )");
-      if( retrieveAction( stMessage.charAt(1), stMessage.charAt(2) ) ){
-        client.publish("testTopic", "1");
-      }
-    }
 }
 
 
@@ -166,18 +137,60 @@ void reconnect() {
 
 
 
+// called by client.loop() 
+// Responsible for receiving mqtt messages. 
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  String stMessage;
+
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+    stMessage += (char)payload[i];
+  }
+  Serial.println();
+
+  if(stMessage.charAt(0) == '0'){
+      Serial.print("retrieve item from shelf ( ");
+      Serial.print(stMessage.substring(1));
+      Serial.println(" )");
+      if( retrieveAction( stMessage.charAt(1), stMessage.charAt(2) ) ){
+        client.publish("testTopic", "1");
+      }
+    }
+}
+
+
+
+void rotateClockwise(AccelStepper& stepper, int destination) {
+  stepper.moveTo(destination * 10);
+  stepper.runToPosition();
+  Serial.print("moving ");
+}
+/*
+void rotateAntiClockwise(AccelStepper& stepper, int destination) {
+  stepper.moveTo(stepsPerRevolution / 10); // Rotate 36 degrees (10% of a full revolution) anticlockwise
+  stepper.run();
+}
+*/
+
+
 bool retrieveAction( int locationX, int locationY ){
   // note, this needs more work for actual robot. 
-  currentPosition1 = moveToTarget(Stepper1, targetPosition1, currentPosition1);  
-  currentPosition2 = moveToTarget(Stepper2, targetPosition2, currentPosition2);    
-  currentPosition3 = moveToTarget(Stepper3, targetPosition3, currentPosition3);    
-  //currentPosition4 = moveToTarget(Stepper4, targetPosition4, currentPosition4); 
+  
+  rotateClockwise(stepper1, locationX);
+  rotateClockwise(stepper2, locationX);
+  rotateClockwise(stepper3, locationY);
+  rotateClockwise(stepper4, locationY);
+     
   return true; 
 }
 
 
 
 // Function to move a stepper motor to its target position and return the new position  
+/*
 long moveToTarget(Stepper& stepper, long targetPosition, long& currentPosition) {  
     long stepsToMove = targetPosition - currentPosition;
     stepsToMove = +stepsToMove;
@@ -189,7 +202,7 @@ long moveToTarget(Stepper& stepper, long targetPosition, long& currentPosition) 
     }   
     return currentPosition;  
 } 
-
+*/
 
 
 
@@ -199,21 +212,32 @@ void setup() {
   Serial.begin(9600);
   delay(500);
 
+  
   setup_wifi();
 
   espClient.setCACert(root_ca);
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
+  
 
-  Stepper1.setSpeed(speed1);  
-  Stepper2.setSpeed(speed2);  
-  Stepper3.setSpeed(speed3);  
-  Stepper4.setSpeed(speed4);
+  stepper1.setMaxSpeed(1000); // Adjust the maximum speed of your stepper motor
+  stepper1.setAcceleration(500); // Adjust the acceleration of your stepper motor
+
+  stepper2.setMaxSpeed(1000); 
+  stepper2.setAcceleration(500);
+
+  stepper3.setMaxSpeed(1000); 
+  stepper3.setAcceleration(500);
+
+  stepper4.setMaxSpeed(1000); 
+  stepper4.setAcceleration(500);
 }
 
 
 
 void loop() {
+  
+  
   if (!client.connected()) {
     reconnect();
   }
@@ -228,6 +252,7 @@ void loop() {
     Serial.println(msg);
     client.publish("testTopic", msg);
   }
+  
 
   delay(1);
 }
