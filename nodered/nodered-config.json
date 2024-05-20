@@ -1,8 +1,8 @@
 [
     {
-        "id": "f6f2187d.f17ca8",
+        "id": "15583713aefc7827",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "testing",
         "disabled": false,
         "info": ""
     },
@@ -53,37 +53,6 @@
         "sessionExpiry": ""
     },
     {
-        "id": "66cc7e4709fba89e",
-        "type": "ui-base",
-        "name": "Pharmacist",
-        "path": "/dashboard",
-        "includeClientData": true,
-        "acceptsClientConfig": [
-            "ui-notification",
-            "ui-control"
-        ],
-        "showPathInSidebar": false,
-        "navigationStyle": "default"
-    },
-    {
-        "id": "b5c3242cc70158d3",
-        "type": "ui-theme",
-        "name": "Default Theme",
-        "colors": {
-            "surface": "#ffffff",
-            "primary": "#0094CE",
-            "bgPage": "#eeeeee",
-            "groupBg": "#ffffff",
-            "groupOutline": "#cccccc"
-        },
-        "sizes": {
-            "pagePadding": "12px",
-            "groupGap": "12px",
-            "groupBorderRadius": "4px",
-            "widgetGap": "12px"
-        }
-    },
-    {
         "id": "e20871c0d6633b8b",
         "type": "ui_base",
         "theme": {
@@ -92,7 +61,8 @@
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "darkTheme": {
                 "default": "#097479",
@@ -198,7 +168,44 @@
         "hidden": false
     },
     {
-        "id": "f0de4ba152aecc2c",
+        "id": "4236eef64e8288f4",
+        "type": "mongodb3",
+        "uri": "mongodb+srv://Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        "name": "",
+        "options": "",
+        "parallelism": "-1"
+    },
+    {
+        "id": "8efbd4578f8ecf11",
+        "type": "mongodb-aleph-config",
+        "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "ASRS",
+        "name": ""
+    },
+    {
+        "id": "91da677bce3bf414",
+        "type": "ui_tab",
+        "name": "Pharmacist load meds",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "5d65da9b3e7367ef",
+        "type": "ui_group",
+        "name": "Pharmacist loads meds",
+        "tab": "91da677bce3bf414",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "7bec1ed418fad541",
         "type": "ui_group",
         "name": "Group 1",
         "tab": "57b8334d92a7b6b7",
@@ -207,7 +214,7 @@
         "width": 6
     },
     {
-        "id": "e787be44c0653864",
+        "id": "1475d3bf351ff22b",
         "type": "ui_group",
         "name": "Group 1",
         "tab": "8240c7a306536173",
@@ -216,19 +223,9 @@
         "width": 6
     },
     {
-        "id": "3cc11d24.ff01a2",
-        "type": "comment",
-        "z": "f6f2187d.f17ca8",
-        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
-        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
-        "x": 350,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "25bdffc7f6d64ec4",
+        "id": "149754882e68baba",
         "type": "mqtt in",
-        "z": "f6f2187d.f17ca8",
+        "z": "15583713aefc7827",
         "name": "",
         "topic": "testTopic",
         "qos": "2",
@@ -238,18 +235,18 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 260,
-        "y": 380,
+        "x": 240,
+        "y": 340,
         "wires": [
             [
-                "d5210e65bdb8dbaf"
+                "72717ba0444fe312"
             ]
         ]
     },
     {
-        "id": "d5210e65bdb8dbaf",
+        "id": "72717ba0444fe312",
         "type": "debug",
-        "z": "f6f2187d.f17ca8",
+        "z": "15583713aefc7827",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -259,14 +256,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 500,
-        "y": 380,
+        "x": 480,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "261f293afddb01c7",
+        "id": "47a6b687af7607f5",
         "type": "mqtt out",
-        "z": "f6f2187d.f17ca8",
+        "z": "15583713aefc7827",
         "name": "",
         "topic": "testTopic",
         "qos": "",
@@ -277,14 +274,14 @@
         "correl": "",
         "expiry": "",
         "broker": "ce684d0833c30503",
-        "x": 520,
-        "y": 500,
+        "x": 500,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "50b14f72df6e3efa",
+        "id": "61cc182c4fbf0c82",
         "type": "inject",
-        "z": "f6f2187d.f17ca8",
+        "z": "15583713aefc7827",
         "name": "",
         "props": [
             {
@@ -302,19 +299,19 @@
         "topic": "testTopic",
         "payload": "011",
         "payloadType": "str",
-        "x": 270,
-        "y": 500,
+        "x": 250,
+        "y": 460,
         "wires": [
             [
-                "261f293afddb01c7"
+                "47a6b687af7607f5"
             ]
         ]
     },
     {
-        "id": "ce5dc39e6e64d493",
+        "id": "98e9b415f5570edb",
         "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
-        "group": "f0de4ba152aecc2c",
+        "z": "15583713aefc7827",
+        "group": "7bec1ed418fad541",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -327,15 +324,15 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 940,
-        "y": 380,
+        "x": 880,
+        "y": 720,
         "wires": []
     },
     {
-        "id": "bd30c4ece857e1eb",
+        "id": "e3ce36cd51cba4e6",
         "type": "ui_text",
-        "z": "f6f2187d.f17ca8",
-        "group": "e787be44c0653864",
+        "z": "15583713aefc7827",
+        "group": "1475d3bf351ff22b",
         "order": 0,
         "width": 0,
         "height": 0,
@@ -348,8 +345,232 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 920,
-        "y": 620,
+        "x": 860,
+        "y": 500,
         "wires": []
+    },
+    {
+        "id": "4555584fdc8ecf33",
+        "type": "ui_dropdown",
+        "z": "15583713aefc7827",
+        "name": "",
+        "label": "which medication?",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "5d65da9b3e7367ef",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Fentalyn",
+                "value": "Fentalyn",
+                "type": "str"
+            },
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 1310,
+        "y": 720,
+        "wires": [
+            [
+                "2be1afc011f1e5aa"
+            ]
+        ]
+    },
+    {
+        "id": "5bb474c5fa3e077a",
+        "type": "ui_numeric",
+        "z": "15583713aefc7827",
+        "name": "",
+        "label": "numeric",
+        "tooltip": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 1280,
+        "y": 800,
+        "wires": [
+            [
+                "2be1afc011f1e5aa"
+            ]
+        ]
+    },
+    {
+        "id": "44422ebd1f88be8a",
+        "type": "ui_button",
+        "z": "15583713aefc7827",
+        "name": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "submit",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1270,
+        "y": 880,
+        "wires": [
+            [
+                "2be1afc011f1e5aa"
+            ]
+        ]
+    },
+    {
+        "id": "2be1afc011f1e5aa",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1700,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "ceb8565fbb92dd45",
+        "type": "ui_ui_control",
+        "z": "15583713aefc7827",
+        "name": "load meds",
+        "events": "all",
+        "x": 830,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6650279fbe06c713",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "f4914e7dafd4ebdd",
+        "type": "change",
+        "z": "15583713aefc7827",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "operation",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d14b9307e64ee466",
+        "type": "mongodb-aleph-in",
+        "z": "15583713aefc7827",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "getMeds",
+        "collection": "Medications",
+        "operation": "find",
+        "x": 760,
+        "y": 1480,
+        "wires": [
+            [
+                "6650279fbe06c713"
+            ]
+        ]
+    },
+    {
+        "id": "b6e52f6249e0cd1f",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 1",
+        "func": "\nmsg.find = {};\nmsg.projection = { \"_id\": 0, \"_location\": 1 };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 1340,
+        "wires": [
+            [
+                "d14b9307e64ee466"
+            ]
+        ]
+    },
+    {
+        "id": "fb01d198eb7aa26f",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 560,
+        "y": 1240,
+        "wires": [
+            [
+                "b6e52f6249e0cd1f"
+            ]
+        ]
     }
 ]
