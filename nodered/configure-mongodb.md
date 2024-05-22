@@ -8,6 +8,16 @@ Create a document in the database, like this:
 
 ![image](https://github.com/Artyom-kurguzkin/CC-ASRS/assets/10873919/2a0d5263-2d15-46a4-93c1-53fe64ca9a0c)
 
+HERE is the approximate schema
+
+```
+_id
+_level : "High" or "LOW"
+_name "Phentanyl" or "Panadol"
+_location: "15, 3"
+  
+```
+
 
 <br>
 
