@@ -7,9 +7,9 @@
         "info": ""
     },
     {
-        "id": "848e4d73df784c05",
+        "id": "21fee8620524dd1a",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "loader",
         "disabled": false,
         "info": "",
         "env": []
@@ -388,100 +388,6 @@
         "wires": []
     },
     {
-        "id": "4555584fdc8ecf33",
-        "type": "ui_dropdown",
-        "z": "15583713aefc7827",
-        "name": "",
-        "label": "which medication?",
-        "tooltip": "",
-        "place": "Select option",
-        "group": "5d65da9b3e7367ef",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "multiple": false,
-        "options": [
-            {
-                "label": "Fentalyn",
-                "value": "Fentalyn",
-                "type": "str"
-            },
-            {
-                "label": "Panadol",
-                "value": "Panadol",
-                "type": "str"
-            }
-        ],
-        "payload": "",
-        "topic": "topic",
-        "topicType": "msg",
-        "className": "",
-        "x": 1230,
-        "y": 720,
-        "wires": [
-            [
-                "5c11f9c6d669e6d2",
-                "7175c8458a2c52f4"
-            ]
-        ]
-    },
-    {
-        "id": "5bb474c5fa3e077a",
-        "type": "ui_numeric",
-        "z": "15583713aefc7827",
-        "name": "",
-        "label": "numeric",
-        "tooltip": "",
-        "group": "5d65da9b3e7367ef",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "wrap": false,
-        "passthru": true,
-        "topic": "topic",
-        "topicType": "msg",
-        "format": "{{value}}",
-        "min": 0,
-        "max": 10,
-        "step": 1,
-        "className": "",
-        "x": 1200,
-        "y": 760,
-        "wires": [
-            [
-                "e254d4f271beadb9",
-                "7175c8458a2c52f4"
-            ]
-        ]
-    },
-    {
-        "id": "44422ebd1f88be8a",
-        "type": "ui_button",
-        "z": "15583713aefc7827",
-        "name": "",
-        "group": "5d65da9b3e7367ef",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "submit",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "className": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "topic",
-        "topicType": "msg",
-        "x": 1190,
-        "y": 800,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "6650279fbe06c713",
         "type": "debug",
         "z": "15583713aefc7827",
@@ -529,7 +435,7 @@
         "y": 760,
         "wires": [
             [
-                "d14b9307e64ee466"
+                "9f8d729891e248e8"
             ]
         ]
     },
@@ -586,16 +492,6 @@
         "name": "GUIs",
         "info": "",
         "x": 810,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "ec619be3f096aff8",
-        "type": "comment",
-        "z": "15583713aefc7827",
-        "name": "Pharmacist loads meds form",
-        "info": "",
-        "x": 1260,
         "y": 680,
         "wires": []
     },
@@ -727,10 +623,55 @@
         "wires": []
     },
     {
-        "id": "c7e350220d9cef29",
+        "id": "d45bb08287c9d0a0",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 4",
+        "func": "\nmsg.find = { _name : \"Phentanyl\" };\nmsg.projection = { \"_id\": 0, \"_location\": 1 };\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 960,
+        "wires": [
+            [
+                "d14b9307e64ee466"
+            ]
+        ]
+    },
+    {
+        "id": "f0d7f232b83aba11",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 860,
+        "wires": [
+            [
+                "d45bb08287c9d0a0"
+            ]
+        ]
+    },
+    {
+        "id": "9f8d729891e248e8",
         "type": "debug",
         "z": "15583713aefc7827",
-        "name": "debug 4",
+        "name": "debug 5",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -739,14 +680,135 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1740,
-        "y": 620,
+        "x": 620,
+        "y": 840,
         "wires": []
     },
     {
-        "id": "ae660e71fe510dee",
+        "id": "3a41765867a362db",
+        "type": "ui_dropdown",
+        "z": "21fee8620524dd1a",
+        "name": "",
+        "label": "which medication?",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "5d65da9b3e7367ef",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Fentalyn",
+                "value": "Fentalyn",
+                "type": "str"
+            },
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "c9a324ff6f4fbbe2",
+                "0738b15dd36929bc"
+            ]
+        ]
+    },
+    {
+        "id": "a22f990d69e915ad",
+        "type": "ui_numeric",
+        "z": "21fee8620524dd1a",
+        "name": "",
+        "label": "numeric",
+        "tooltip": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "006eaee12719f3aa",
+                "0738b15dd36929bc"
+            ]
+        ]
+    },
+    {
+        "id": "8242e36aef26b49e",
+        "type": "ui_button",
+        "z": "21fee8620524dd1a",
+        "name": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "submit",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb06f8c90b126c07",
+        "type": "comment",
+        "z": "21fee8620524dd1a",
+        "name": "Pharmacist loads meds form",
+        "info": "",
+        "x": 200,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "cec73c549973de32",
+        "type": "debug",
+        "z": "21fee8620524dd1a",
+        "name": "debug 6",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a2df5a92d367c0ef",
         "type": "join",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "",
         "mode": "custom",
         "build": "object",
@@ -763,19 +825,19 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 1650,
-        "y": 740,
+        "x": 590,
+        "y": 380,
         "wires": [
             [
-                "c7e350220d9cef29",
-                "c32ea21221857935"
+                "cec73c549973de32",
+                "710bc3272ea96ea1"
             ]
         ]
     },
     {
-        "id": "5c11f9c6d669e6d2",
+        "id": "c9a324ff6f4fbbe2",
         "type": "change",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "",
         "rules": [
             {
@@ -791,19 +853,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1430,
-        "y": 720,
+        "x": 370,
+        "y": 360,
         "wires": [
             [
-                "ae660e71fe510dee",
-                "d9ed3c6c8784ad27"
+                "a2df5a92d367c0ef",
+                "bf2b3c4584bda723"
             ]
         ]
     },
     {
-        "id": "e254d4f271beadb9",
+        "id": "006eaee12719f3aa",
         "type": "change",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "",
         "rules": [
             {
@@ -819,21 +881,21 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1410,
-        "y": 760,
+        "x": 350,
+        "y": 400,
         "wires": [
             [
-                "ae660e71fe510dee",
-                "d9ed3c6c8784ad27"
+                "a2df5a92d367c0ef",
+                "bf2b3c4584bda723"
             ]
         ]
     },
     {
-        "id": "d9ed3c6c8784ad27",
+        "id": "bf2b3c4584bda723",
         "type": "debug",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "topic",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -841,14 +903,14 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1690,
-        "y": 940,
+        "x": 630,
+        "y": 580,
         "wires": []
     },
     {
-        "id": "7175c8458a2c52f4",
+        "id": "0738b15dd36929bc",
         "type": "debug",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "payload",
         "active": false,
         "tosidebar": true,
@@ -858,35 +920,34 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1400,
-        "y": 900,
+        "x": 340,
+        "y": 540,
         "wires": []
     },
     {
-        "id": "c32ea21221857935",
+        "id": "710bc3272ea96ea1",
         "type": "function",
-        "z": "15583713aefc7827",
-        "name": "function 3",
-        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.Medication;\nvar amount = msg.payload.amount;\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Specify the MongoDB operation as insert\nmsg.operation = \"insert\";\n\n// Return the modified message object\nreturn msg;",
+        "z": "21fee8620524dd1a",
+        "name": "Prepare MongoDB Insert",
+        "func": "var medication = msg.payload.Medication;\nvar amount = msg.payload.amount;\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1800,
-        "y": 800,
+        "x": 740,
+        "y": 440,
         "wires": [
             [
-                "d751184f492c2ff1",
-                "608781efe1043ae2"
+                "a4e0c7cb4b890b0e"
             ]
         ]
     },
     {
-        "id": "d751184f492c2ff1",
+        "id": "a4e0c7cb4b890b0e",
         "type": "mongodb-aleph-out",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "mongodb": "8efbd4578f8ecf11",
         "name": "load meds",
         "collection": "Medications",
@@ -894,18 +955,18 @@
         "upsert": false,
         "multi": false,
         "operation": "insert",
-        "x": 1970,
-        "y": 880,
+        "x": 910,
+        "y": 520,
         "wires": [
             [
-                "f5640981648c748a"
+                "155bddc8fbf848b5"
             ]
         ]
     },
     {
-        "id": "f5640981648c748a",
+        "id": "155bddc8fbf848b5",
         "type": "debug",
-        "z": "15583713aefc7827",
+        "z": "21fee8620524dd1a",
         "name": "load confirmation",
         "active": true,
         "tosidebar": true,
@@ -915,25 +976,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2030,
-        "y": 980,
-        "wires": []
-    },
-    {
-        "id": "608781efe1043ae2",
-        "type": "debug",
-        "z": "15583713aefc7827",
-        "name": "loader ouptut",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2060,
-        "y": 740,
+        "x": 970,
+        "y": 620,
         "wires": []
     }
 ]
