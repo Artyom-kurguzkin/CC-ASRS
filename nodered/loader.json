@@ -1,0 +1,353 @@
+[
+    {
+        "id": "e6fc873145b0a448",
+        "type": "tab",
+        "label": "loader",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0ccd05eb15a70f9c",
+        "type": "ui_dropdown",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "label": "which medication?",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "5d65da9b3e7367ef",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Fentalyn",
+                "value": "Fentalyn",
+                "type": "str"
+            },
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 170,
+        "y": 360,
+        "wires": [
+            [
+                "fa588c9939df91b1",
+                "ac795cffb5fe777e"
+            ]
+        ]
+    },
+    {
+        "id": "dd953365a9b5b6a6",
+        "type": "ui_numeric",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "label": "numeric",
+        "tooltip": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "className": "",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "5b80b20fb3b65869",
+                "ac795cffb5fe777e"
+            ]
+        ]
+    },
+    {
+        "id": "93200b852270d944",
+        "type": "ui_button",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "group": "5d65da9b3e7367ef",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "submit",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "091169452b5e7ae5",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist loads meds form",
+        "info": "",
+        "x": 200,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "ee1cc3e044d720b2",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Combined Payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f0b8e35182567039",
+        "type": "join",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 590,
+        "y": 380,
+        "wires": [
+            [
+                "ee1cc3e044d720b2",
+                "69ba31236606abf0"
+            ]
+        ]
+    },
+    {
+        "id": "fa588c9939df91b1",
+        "type": "change",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Medication",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "f0b8e35182567039",
+                "b103d52ba3ca5a34"
+            ]
+        ]
+    },
+    {
+        "id": "5b80b20fb3b65869",
+        "type": "change",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "amount",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "f0b8e35182567039",
+                "b103d52ba3ca5a34"
+            ]
+        ]
+    },
+    {
+        "id": "b103d52ba3ca5a34",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Topic Debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "ac795cffb5fe777e",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Payload Debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "69ba31236606abf0",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "Prepare MongoDB Insert",
+        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.Medication;\nvar amount = msg.payload.amount;\nnode.warn('Extracted Medication: ' + medication);\nnode.warn('Extracted Amount: ' + amount);\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\nnode.warn('New Document: ' + JSON.stringify(newDocument));\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\nnode.warn('Operation: insert');\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 440,
+        "wires": [
+            [
+                "fccbfb451e6121a1",
+                "d4c3057256423725"
+            ]
+        ]
+    },
+    {
+        "id": "fccbfb451e6121a1",
+        "type": "mongodb-aleph-out",
+        "z": "e6fc873145b0a448",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "Load Meds to MongoDB",
+        "collection": "Medications",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 910,
+        "y": 520,
+        "wires": [
+            [
+                "abd623c749f036f8"
+            ]
+        ]
+    },
+    {
+        "id": "abd623c749f036f8",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Load Confirmation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "d4c3057256423725",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Loader Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5d65da9b3e7367ef",
+        "type": "ui_group",
+        "name": "Pharmacist loads meds",
+        "tab": "91da677bce3bf414",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8efbd4578f8ecf11",
+        "type": "mongodb-aleph-config",
+        "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "ASRS",
+        "name": ""
+    },
+    {
+        "id": "91da677bce3bf414",
+        "type": "ui_tab",
+        "name": "Pharmacist load meds",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
