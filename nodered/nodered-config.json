@@ -7,6 +7,14 @@
         "info": ""
     },
     {
+        "id": "848e4d73df784c05",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "9be72af31adee06c",
         "type": "tls-config",
         "name": "",
@@ -168,14 +176,6 @@
         "hidden": false
     },
     {
-        "id": "4236eef64e8288f4",
-        "type": "mongodb3",
-        "uri": "mongodb+srv://Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-        "name": "",
-        "options": "",
-        "parallelism": "-1"
-    },
-    {
         "id": "8efbd4578f8ecf11",
         "type": "mongodb-aleph-config",
         "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
@@ -207,11 +207,13 @@
     {
         "id": "7bec1ed418fad541",
         "type": "ui_group",
-        "name": "Group 1",
+        "name": "Pharmacist main menu",
         "tab": "57b8334d92a7b6b7",
         "order": 1,
         "disp": true,
-        "width": 6
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "1475d3bf351ff22b",
@@ -221,6 +223,42 @@
         "order": 1,
         "disp": true,
         "width": 6
+    },
+    {
+        "id": "4fbf457a.27378c",
+        "type": "ui_tab",
+        "name": "Messaging",
+        "icon": "mail_outline"
+    },
+    {
+        "id": "55d74f47664f799f",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "57b8334d92a7b6b7",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "96f93aa8ca69e256",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "73951fa55cdaa0c2",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "96f93aa8ca69e256",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "149754882e68baba",
@@ -316,7 +354,7 @@
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "I am pharmacist meny item",
+        "label": "Pharmacist menu description",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
@@ -324,7 +362,7 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 880,
+        "x": 720,
         "y": 720,
         "wires": []
     },
@@ -346,7 +384,7 @@
         "fontSize": 16,
         "color": "#000000",
         "x": 860,
-        "y": 500,
+        "y": 840,
         "wires": []
     },
     {
@@ -379,11 +417,12 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 1310,
+        "x": 1230,
         "y": 720,
         "wires": [
             [
-                "2be1afc011f1e5aa"
+                "5c11f9c6d669e6d2",
+                "7175c8458a2c52f4"
             ]
         ]
     },
@@ -407,11 +446,12 @@
         "max": 10,
         "step": 1,
         "className": "",
-        "x": 1280,
-        "y": 800,
+        "x": 1200,
+        "y": 760,
         "wires": [
             [
-                "2be1afc011f1e5aa"
+                "e254d4f271beadb9",
+                "7175c8458a2c52f4"
             ]
         ]
     },
@@ -435,37 +475,7 @@
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 1270,
-        "y": 880,
-        "wires": [
-            [
-                "2be1afc011f1e5aa"
-            ]
-        ]
-    },
-    {
-        "id": "2be1afc011f1e5aa",
-        "type": "debug",
-        "z": "15583713aefc7827",
-        "name": "debug 2",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1700,
-        "y": 820,
-        "wires": []
-    },
-    {
-        "id": "ceb8565fbb92dd45",
-        "type": "ui_ui_control",
-        "z": "15583713aefc7827",
-        "name": "load meds",
-        "events": "all",
-        "x": 830,
+        "x": 1190,
         "y": 800,
         "wires": [
             []
@@ -483,34 +493,9 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 840,
-        "y": 1580,
+        "x": 560,
+        "y": 1000,
         "wires": []
-    },
-    {
-        "id": "f4914e7dafd4ebdd",
-        "type": "change",
-        "z": "15583713aefc7827",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "operation",
-                "pt": "msg",
-                "to": "",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 710,
-        "y": 1060,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "d14b9307e64ee466",
@@ -520,8 +505,8 @@
         "name": "getMeds",
         "collection": "Medications",
         "operation": "find",
-        "x": 760,
-        "y": 1480,
+        "x": 480,
+        "y": 900,
         "wires": [
             [
                 "6650279fbe06c713"
@@ -540,8 +525,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 690,
-        "y": 1340,
+        "x": 410,
+        "y": 760,
         "wires": [
             [
                 "d14b9307e64ee466"
@@ -565,12 +550,390 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 560,
-        "y": 1240,
+        "x": 280,
+        "y": 660,
         "wires": [
             [
                 "b6e52f6249e0cd1f"
             ]
         ]
+    },
+    {
+        "id": "55923586.9795cc",
+        "type": "ui_template",
+        "z": "15583713aefc7827",
+        "group": "7bec1ed418fad541",
+        "name": "redirect to pharmcist load meds form",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 930,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bb13334d23b8d9e",
+        "type": "comment",
+        "z": "15583713aefc7827",
+        "name": "GUIs",
+        "info": "",
+        "x": 810,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "ec619be3f096aff8",
+        "type": "comment",
+        "z": "15583713aefc7827",
+        "name": "Pharmacist loads meds form",
+        "info": "",
+        "x": 1260,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "6b369b6c96b38904",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 2",
+        "func": "msg.payload = msg.payload || {};\nswitch(msg.payload) {\n    case \"load\":\n        msg.template = \"load_template\";\n        break;\n    case \"history\":\n        msg.template = \"history_template\";\n        break;\n    case \"check\":\n        msg.template = \"check_template\";\n        break;\n    default:\n        msg.template = \"default_template\";\n}\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 1140,
+        "wires": [
+            [
+                "62632c1864562600"
+            ]
+        ]
+    },
+    {
+        "id": "23979b9165531bce",
+        "type": "http in",
+        "z": "15583713aefc7827",
+        "name": "",
+        "url": "/test2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 610,
+        "y": 1140,
+        "wires": [
+            [
+                "c48aa97b90db3b78"
+            ]
+        ]
+    },
+    {
+        "id": "57740e7682363512",
+        "type": "ui_template",
+        "z": "15583713aefc7827",
+        "group": "5d65da9b3e7367ef",
+        "name": "history log ",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Dynamic Table Example</title>\n<style>\n    table {\n        width: 100%;\n        border-collapse: collapse;\n    }\n    th, td {\n        border: 1px solid #ddd;\n        padding: 8px;\n        text-align: left;\n    }\n    th {\n        background-color: #f2f2f2;\n    }\n</style>\n</head>\n<body>\n\n<table id=\"myTable\">\n    <thead>\n        <tr>\n            <th>User ID</th>\n            <th>Date and Time</th>\n            <th>Action</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>1</td>\n            <td>2024-05-10 08:30 AM</td>\n            <td>Edit</td>\n        </tr>\n        <tr>\n            <td>2</td>\n            <td>2024-05-11 03:45 PM</td>\n            <td>Delete</td>\n        </tr>\n        <!-- Existing rows -->\n    </tbody>\n</table>\n\n<button onclick=\"addRow()\">Add Row</button>\n\n<script>\n    async function fetchUserData() {\n        // Simulate a call to the database or backend API\n        // Replace this with your actual database call\n        return {\n            userId: 3, // Replace with actual user ID from the database\n            action: \"View\" // Replace with actual action from the database\n        };\n    }\n\n    async function addRow() {\n        var userData = await fetchUserData();\n        var table = document.getElementById(\"myTable\").getElementsByTagName('tbody')[0];\n        var newRow = table.insertRow(table.rows.length);\n\n        var cell1 = newRow.insertCell(0);\n        var cell2 = newRow.insertCell(1);\n        var cell3 = newRow.insertCell(2);\n\n        cell1.innerHTML = userData.userId; // User ID from the database\n        cell2.innerHTML = new Date().toLocaleString(); // Current date and time\n        cell3.innerHTML = userData.action; // Action from the database\n    }\n</script>\n\n</body>\n</html>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1290,
+        "y": 1160,
+        "wires": [
+            [
+                "20eb824abba738f9"
+            ]
+        ]
+    },
+    {
+        "id": "c48aa97b90db3b78",
+        "type": "template",
+        "z": "15583713aefc7827",
+        "name": "main menu",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Menu Page</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            margin: 0;\n            padding: 0;\n        }\n\n        .menu-title {\n            margin-top: 50px;\n            font-size: 48px;\n            margin-bottom: 30px;\n            color: #333;\n        }\n\n        .menu-button {\n            background-color: #4CAF50;\n            color: #ffffff;\n            padding: 15px 30px;\n            border: none;\n            border-radius: 5px;\n            cursor: pointer;\n            margin-bottom: 20px;\n            font-size: 24px;\n            transition: background-color 0.3s ease;\n        }\n\n        .menu-button:hover {\n            background-color: #3e8e41;\n        }\n    </style>\n</head>\n<body>\n    <h1 class=\"menu-title\">Menu Page</h1>\n    <button class=\"menu-button\" onclick=\"sendPayload('load')\">load&retrieve medication</button>\n    <button class=\"menu-button\" onclick=\"sendPayload('history')\">Medication database</button>\n    <button class=\"menu-button\" onclick=\"sendPayload('check')\">history log</button>\n\n    <script>\n        function sendPayload(payload) {\n            var msg = { payload: payload };\n            RED.comms.publish(\"input\", msg);\n        }\n    </script>\n</body>\n</html>\n",
+        "output": "str",
+        "x": 790,
+        "y": 1140,
+        "wires": [
+            [
+                "6b369b6c96b38904"
+            ]
+        ]
+    },
+    {
+        "id": "62632c1864562600",
+        "type": "switch",
+        "z": "15583713aefc7827",
+        "name": "",
+        "property": "template",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "load",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "history",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "check",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 1090,
+        "y": 1140,
+        "wires": [
+            [],
+            [],
+            [
+                "57740e7682363512"
+            ]
+        ]
+    },
+    {
+        "id": "20eb824abba738f9",
+        "type": "http response",
+        "z": "15583713aefc7827",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1490,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "c7e350220d9cef29",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1740,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "ae660e71fe510dee",
+        "type": "join",
+        "z": "15583713aefc7827",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1650,
+        "y": 740,
+        "wires": [
+            [
+                "c7e350220d9cef29",
+                "c32ea21221857935"
+            ]
+        ]
+    },
+    {
+        "id": "5c11f9c6d669e6d2",
+        "type": "change",
+        "z": "15583713aefc7827",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Medication",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1430,
+        "y": 720,
+        "wires": [
+            [
+                "ae660e71fe510dee",
+                "d9ed3c6c8784ad27"
+            ]
+        ]
+    },
+    {
+        "id": "e254d4f271beadb9",
+        "type": "change",
+        "z": "15583713aefc7827",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "amount",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1410,
+        "y": 760,
+        "wires": [
+            [
+                "ae660e71fe510dee",
+                "d9ed3c6c8784ad27"
+            ]
+        ]
+    },
+    {
+        "id": "d9ed3c6c8784ad27",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "topic",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1690,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "7175c8458a2c52f4",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "payload",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1400,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "c32ea21221857935",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 3",
+        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.Medication;\nvar amount = msg.payload.amount;\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Specify the MongoDB operation as insert\nmsg.operation = \"insert\";\n\n// Return the modified message object\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 800,
+        "wires": [
+            [
+                "d751184f492c2ff1",
+                "608781efe1043ae2"
+            ]
+        ]
+    },
+    {
+        "id": "d751184f492c2ff1",
+        "type": "mongodb-aleph-out",
+        "z": "15583713aefc7827",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "load meds",
+        "collection": "Medications",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 1970,
+        "y": 880,
+        "wires": [
+            [
+                "f5640981648c748a"
+            ]
+        ]
+    },
+    {
+        "id": "f5640981648c748a",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "load confirmation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2030,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "608781efe1043ae2",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "loader ouptut",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2060,
+        "y": 740,
+        "wires": []
     }
 ]
