@@ -1,0 +1,209 @@
+[
+    {
+        "id": "6b6dd7e06ecadbb4",
+        "type": "tab",
+        "label": "Medication Menu",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d4ce18e4ddae81b5",
+        "type": "ui_numeric",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Amount",
+        "label": "Amount",
+        "tooltip": "",
+        "group": "d8b6d191.994608",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "amount",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "10",
+        "step": 1,
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "43c651aeb5a1601a",
+                "80b4f6f407fe7cc0"
+            ]
+        ]
+    },
+    {
+        "id": "78f9921f53c89a6f",
+        "type": "ui_dropdown",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Medication Type",
+        "label": "Medication Type",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d8b6d191.994608",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            },
+            {
+                "label": "Fentalyn",
+                "value": "Fentalyn",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "medication",
+        "topicType": "msg",
+        "className": "",
+        "x": 200,
+        "y": 240,
+        "wires": [
+            [
+                "43c651aeb5a1601a",
+                "80b4f6f407fe7cc0"
+            ]
+        ]
+    },
+    {
+        "id": "43c651aeb5a1601a",
+        "type": "function",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Store Input",
+        "func": "// Store the received input in flow context\nflow.set('amount', msg.payload);\n\n// Check if medication value is already stored\nvar medication = flow.get('medication');\nif (medication !== undefined) {\n    // If both amount and medication are available, proceed to build the object\n    return msg;\n} else {\n    // If medication is not yet received, wait for it\n    return null;\n}\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 210,
+        "wires": [
+            [
+                "5d3a26cac5b3ae99"
+            ]
+        ]
+    },
+    {
+        "id": "eee4bd6ac70542d2",
+        "type": "ui_button",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Confirm",
+        "group": "d8b6d191.994608",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Confirm",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 180,
+        "y": 300,
+        "wires": [
+            [
+                "c571ddb1a2d7cee9"
+            ]
+        ]
+    },
+    {
+        "id": "c571ddb1a2d7cee9",
+        "type": "function",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Build Object",
+        "func": "// Retrieve stored values from flow context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Build the object\n    var data = {\n        amount: amount,\n        medication: medication\n    };\n    // Send the object to the next node\n    msg.payload = data;\n    return msg;\n} else {\n    // If any field is missing, send a message to fill in both fields\n    return \"Please fill in both fields\";\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 360,
+        "wires": [
+            [
+                "bf95f47c4cfde4bc"
+            ]
+        ]
+    },
+    {
+        "id": "bf95f47c4cfde4bc",
+        "type": "debug",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5d3a26cac5b3ae99",
+        "type": "debug",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Stored Input",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 610,
+        "y": 210,
+        "wires": []
+    },
+    {
+        "id": "80b4f6f407fe7cc0",
+        "type": "debug",
+        "z": "6b6dd7e06ecadbb4",
+        "name": "Input Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 270,
+        "wires": []
+    },
+    {
+        "id": "d8b6d191.994608",
+        "type": "ui_group",
+        "name": "Menu",
+        "tab": "87e2aee3.509798",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "87e2aee3.509798",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
