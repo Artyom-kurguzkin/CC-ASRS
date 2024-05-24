@@ -20,7 +20,7 @@
         "finalize": "",
         "libs": [],
         "x": 610,
-        "y": 240,
+        "y": 540,
         "wires": [
             [
                 "fdd29b27467bf404",
@@ -39,11 +39,12 @@
         "upsert": false,
         "multi": false,
         "operation": "insert",
-        "x": 870,
-        "y": 320,
+        "x": 890,
+        "y": 540,
         "wires": [
             [
-                "64dd9fdb495bb68a"
+                "64dd9fdb495bb68a",
+                "dd84c4042fa90ad1"
             ]
         ]
     },
@@ -60,8 +61,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 420,
+        "x": 1150,
+        "y": 500,
         "wires": []
     },
     {
@@ -77,8 +78,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 960,
-        "y": 180,
+        "x": 860,
+        "y": 500,
         "wires": []
     },
     {
@@ -101,8 +102,8 @@
         "max": "10",
         "step": 1,
         "className": "",
-        "x": 110,
-        "y": 160,
+        "x": 100,
+        "y": 300,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -185,7 +186,7 @@
         "topicType": "msg",
         "className": "",
         "x": 120,
-        "y": 220,
+        "y": 340,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -204,8 +205,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 350,
-        "y": 240,
+        "x": 330,
+        "y": 320,
         "wires": [
             []
         ]
@@ -230,10 +231,10 @@
         "topic": "",
         "topicType": "str",
         "x": 100,
-        "y": 280,
+        "y": 380,
         "wires": [
             [
-                "c571ddb1a2d7cee9"
+                "406acdd260635eb1"
             ]
         ]
     },
@@ -249,13 +250,233 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 310,
-        "y": 340,
+        "x": 330,
+        "y": 540,
         "wires": [
             [
                 "9aa5b9070aee3f3e"
             ]
         ]
+    },
+    {
+        "id": "406acdd260635eb1",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "come up with coordinates",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "f9b0adcab224b4ce"
+            ]
+        ]
+    },
+    {
+        "id": "f9b0adcab224b4ce",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "send command to the robot",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 380,
+        "wires": [
+            [
+                "a404e5f2b96a8418"
+            ]
+        ]
+    },
+    {
+        "id": "d135cb702aa1e498",
+        "type": "mqtt in",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "topic": "testTopic",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "ce684d0833c30503",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 840,
+        "y": 420,
+        "wires": [
+            [
+                "49ecd4ee0711be0e"
+            ]
+        ]
+    },
+    {
+        "id": "a404e5f2b96a8418",
+        "type": "mqtt out",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "topic": "testTopic",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "ce684d0833c30503",
+        "x": 840,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "49ecd4ee0711be0e",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "receive confirmation",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "c571ddb1a2d7cee9"
+            ]
+        ]
+    },
+    {
+        "id": "a96f4f422554ace5",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "important!",
+        "info": "we store input into context variables, \nso we don't need to connect this function to anything",
+        "x": 480,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "dd84c4042fa90ad1",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "redirect to confirmation screen",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98e9b415f5570edb",
+        "type": "ui_text",
+        "z": "e6fc873145b0a448",
+        "group": "7bec1ed418fad541",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pharmacist menu description",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 160,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "55923586.9795cc",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "bd2027dddef41de4",
+        "name": "pharmcist load->",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03aaf7c3e9b0d09f",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist loads meds gui",
+        "info": "",
+        "x": 150,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "48f86bfa37b9b926",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist main menu gui",
+        "info": "",
+        "x": 150,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a95860137df9ad52",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "d8b6d191.994608",
+        "name": "pharmcist load/retrieve form->",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7eff2d78e90c1a67",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "load or retrieve?",
+        "info": "",
+        "x": 480,
+        "y": 80,
+        "wires": []
     },
     {
         "id": "8efbd4578f8ecf11",
@@ -279,10 +500,96 @@
         "className": ""
     },
     {
+        "id": "ce684d0833c30503",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Artyom's ASRS broker",
+        "broker": "06ea4fbd57d348d0931b9543624acafa.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "9be72af31adee06c",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7bec1ed418fad541",
+        "type": "ui_group",
+        "name": "Pharmacist main menu",
+        "tab": "57b8334d92a7b6b7",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bd2027dddef41de4",
+        "type": "ui_group",
+        "name": "p l/r group",
+        "tab": "c74ca39032f59d25",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "91da677bce3bf414",
         "type": "ui_tab",
         "name": "Pharmacist load meds",
         "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "9be72af31adee06c",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "isrgrootx1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "57b8334d92a7b6b7",
+        "type": "ui_tab",
+        "name": "Pharmacist main menu",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c74ca39032f59d25",
+        "type": "ui_tab",
+        "name": "Pharmacist load or retrieve?",
+        "icon": "dashboard",
+        "order": 5,
         "disabled": false,
         "hidden": false
     }
