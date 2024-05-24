@@ -11,11 +11,12 @@
         "id": "0ccd05eb15a70f9c",
         "type": "ui_dropdown",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
         "label": "which medication?",
         "tooltip": "",
         "place": "Select option",
-        "group": "5d65da9b3e7367ef",
+        "group": "",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -50,10 +51,11 @@
         "id": "dd953365a9b5b6a6",
         "type": "ui_numeric",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
         "label": "numeric",
         "tooltip": "",
-        "group": "5d65da9b3e7367ef",
+        "group": "",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -79,23 +81,24 @@
         "id": "93200b852270d944",
         "type": "ui_button",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
-        "group": "5d65da9b3e7367ef",
+        "group": "",
         "order": 3,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "submit",
+        "label": "Submit",
         "tooltip": "",
-        "color": "",
-        "bgcolor": "",
+        "color": "White",
+        "bgcolor": "Green",
         "className": "",
         "icon": "",
         "payload": "",
         "payloadType": "str",
         "topic": "topic",
         "topicType": "msg",
-        "x": 130,
+        "x": 140,
         "y": 440,
         "wires": [
             []
@@ -105,9 +108,10 @@
         "id": "091169452b5e7ae5",
         "type": "comment",
         "z": "e6fc873145b0a448",
-        "name": "Pharmacist loads meds form",
-        "info": "",
-        "x": 200,
+        "d": true,
+        "name": "Pharmacist Medication Loading Form",
+        "info": "# ",
+        "x": 230,
         "y": 320,
         "wires": []
     },
@@ -115,6 +119,7 @@
         "id": "ee1cc3e044d720b2",
         "type": "debug",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Combined Payload",
         "active": true,
         "tosidebar": true,
@@ -132,6 +137,7 @@
         "id": "f0b8e35182567039",
         "type": "join",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
         "mode": "custom",
         "build": "object",
@@ -161,6 +167,7 @@
         "id": "fa588c9939df91b1",
         "type": "change",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -189,6 +196,7 @@
         "id": "5b80b20fb3b65869",
         "type": "change",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -217,6 +225,7 @@
         "id": "b103d52ba3ca5a34",
         "type": "debug",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Topic Debug",
         "active": false,
         "tosidebar": true,
@@ -234,6 +243,7 @@
         "id": "ac795cffb5fe777e",
         "type": "debug",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Payload Debug",
         "active": false,
         "tosidebar": true,
@@ -251,6 +261,7 @@
         "id": "69ba31236606abf0",
         "type": "function",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Prepare MongoDB Insert",
         "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.Medication;\nvar amount = msg.payload.amount;\nnode.warn('Extracted Medication: ' + medication);\nnode.warn('Extracted Amount: ' + amount);\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\nnode.warn('New Document: ' + JSON.stringify(newDocument));\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\nnode.warn('Operation: insert');\n\nreturn msg;",
         "outputs": 1,
@@ -272,6 +283,7 @@
         "id": "fccbfb451e6121a1",
         "type": "mongodb-aleph-out",
         "z": "e6fc873145b0a448",
+        "d": true,
         "mongodb": "8efbd4578f8ecf11",
         "name": "Load Meds to MongoDB",
         "collection": "Medications",
@@ -291,6 +303,7 @@
         "id": "abd623c749f036f8",
         "type": "debug",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Load Confirmation",
         "active": true,
         "tosidebar": true,
@@ -308,6 +321,7 @@
         "id": "d4c3057256423725",
         "type": "debug",
         "z": "e6fc873145b0a448",
+        "d": true,
         "name": "Loader Output",
         "active": true,
         "tosidebar": true,
@@ -322,15 +336,225 @@
         "wires": []
     },
     {
-        "id": "5d65da9b3e7367ef",
-        "type": "ui_group",
-        "name": "Pharmacist loads meds",
-        "tab": "91da677bce3bf414",
+        "id": "9aa5b9070aee3f3e",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "Prepare MongoDB Insert",
+        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.medication;\nvar amount = msg.payload.amount;\nnode.warn('Extracted Medication: ' + medication);\nnode.warn('Extracted Amount: ' + amount);\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\nnode.warn('New Document: ' + JSON.stringify(newDocument));\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\nnode.warn('Operation: ' + msg.operation);\n\n// Reset global variables back to default values\nglobal.set('amount', undefined);\nglobal.set('medication', undefined);\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1020,
+        "wires": [
+            [
+                "fdd29b27467bf404",
+                "6e611c535a045cfb"
+            ]
+        ]
+    },
+    {
+        "id": "6e611c535a045cfb",
+        "type": "mongodb-aleph-out",
+        "z": "e6fc873145b0a448",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "Load Meds to MongoDB",
+        "collection": "Medications",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 970,
+        "y": 1100,
+        "wires": [
+            [
+                "64dd9fdb495bb68a"
+            ]
+        ]
+    },
+    {
+        "id": "64dd9fdb495bb68a",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Load Confirmation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "fdd29b27467bf404",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "Loader Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "d4ce18e4ddae81b5",
+        "type": "ui_numeric",
+        "z": "e6fc873145b0a448",
+        "name": "Amount",
+        "label": "Amount",
+        "tooltip": "",
+        "group": "d8b6d191.994608",
         "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "amount",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "10",
+        "step": 1,
+        "className": "",
+        "x": 210,
+        "y": 940,
+        "wires": [
+            [
+                "43c651aeb5a1601a"
+            ]
+        ]
+    },
+    {
+        "id": "78f9921f53c89a6f",
+        "type": "ui_dropdown",
+        "z": "e6fc873145b0a448",
+        "name": "Medication Type",
+        "label": "Medication Type",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "d8b6d191.994608",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            },
+            {
+                "label": "Fentalyn",
+                "value": "Fentalyn",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "medication",
+        "topicType": "msg",
+        "className": "",
+        "x": 220,
+        "y": 1000,
+        "wires": [
+            [
+                "43c651aeb5a1601a"
+            ]
+        ]
+    },
+    {
+        "id": "43c651aeb5a1601a",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "Store Input",
+        "func": "// Check if the payload contains amount or medication\nif (msg.payload.hasOwnProperty('amount')) {\n    global.set('amount', global.get('amount'));\n    node.warn(\"Amount received and stored globally: \" + msg.payload.amount);\n} else if (msg.payload.hasOwnProperty('medication')) {\n    // Store the received medication in global context\n    global.set('medication', msg.payload.medication);\n    node.warn(\"Medication received and stored globally: \" + msg.payload.medication);\n} else {\n    // Log if payload does not contain expected properties\n    node.warn(\"Payload does not contain 'amount' or 'medication'. Payload: \" + JSON.stringify(msg.payload));\n}\n\n// Retrieve both amount and medication from global context\nvar amount = global.get('amount');\nvar medication = global.get('medication');\n\nnode.warn(\"Retrieved amount from global context: \" + amount);\nnode.warn(\"Retrieved medication from global context: \" + medication);\n\n// Check if both values are available\nif (amount !== undefined && medication !== undefined) {\n    // Both values are available, build the object\n    msg.payload = {\n        amount: amount,\n        medication: medication\n    };\n    node.warn(\"Both values are available, proceeding with msg: \" + JSON.stringify(msg.payload));\n\n    // Optionally, you can decide not to clear the stored values if you need them later\n    // global.set('amount', undefined);\n    // global.set('medication', undefined);\n\n    return msg;\n} else {\n    // If either amount or medication is not yet received, wait for it\n    node.warn(\"Waiting for both values to be received.\");\n    return null;\n}\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eee4bd6ac70542d2",
+        "type": "ui_button",
+        "z": "e6fc873145b0a448",
+        "name": "Confirm",
+        "group": "d8b6d191.994608",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Confirm",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 200,
+        "y": 1060,
+        "wires": [
+            [
+                "c571ddb1a2d7cee9"
+            ]
+        ]
+    },
+    {
+        "id": "c571ddb1a2d7cee9",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "Build Object",
+        "func": "// Retrieve both amount and medication from global context\nvar amount = global.get('amount');\nvar medication = global.get('medication');\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from global context: \" + amount);\nnode.warn(\"Retrieved medication from global context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Build the object\n    var data = {\n        amount: amount,\n        medication: medication\n    };\n    // Send the object to the next node (debug node)\n    msg.payload = data;\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 1120,
+        "wires": [
+            [
+                "9aa5b9070aee3f3e"
+            ]
+        ]
+    },
+    {
+        "id": "d0f4f886c23a8e57",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 860,
+        "wires": []
     },
     {
         "id": "8efbd4578f8ecf11",
@@ -341,6 +565,17 @@
         "port": "27017",
         "db": "ASRS",
         "name": ""
+    },
+    {
+        "id": "d8b6d191.994608",
+        "type": "ui_group",
+        "name": "load meds menu",
+        "tab": "91da677bce3bf414",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "91da677bce3bf414",
