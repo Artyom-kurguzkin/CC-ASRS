@@ -12,7 +12,7 @@
         "type": "function",
         "z": "e6fc873145b0a448",
         "name": "Prepare MongoDB Insert",
-        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.medication;\nvar amount = msg.payload.amount;\nnode.warn('Extracted Medication: ' + medication);\nnode.warn('Extracted Amount: ' + amount);\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount\n};\n\nnode.warn('New Document: ' + JSON.stringify(newDocument));\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\nnode.warn('Operation: ' + msg.operation);\n\n// Reset global variables back to default values\nglobal.set('amount', undefined);\nglobal.set('medication', undefined);\n\nreturn msg;\n",
+        "func": "// Extract the medication and amount from the input message\nvar medication = msg.payload.medication;\nvar amount = msg.payload.amount;\nvar level = msg.payload.level;\n\n//node.warn('Extracted Medication: ' + medication);\n//node.warn('Extracted Amount: ' + amount);\n//node.warn('Extracted Amount: ' + level);\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Amount: amount,\n    Level: level\n};\n\nnode.warn('New Document: ' + JSON.stringify(newDocument));\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Set the MongoDB operation\nmsg.operation = \"insert\";\nnode.warn('Operation: ' + msg.operation);\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -130,8 +130,53 @@
                 "type": "str"
             },
             {
-                "label": "Fentalyn",
-                "value": "Fentalyn",
+                "label": "Fentanyl",
+                "value": "Fentanyl",
+                "type": "str"
+            },
+            {
+                "label": "Morphine",
+                "value": "Morphine",
+                "type": "str"
+            },
+            {
+                "label": "OxyContin",
+                "value": "OxyContin",
+                "type": "str"
+            },
+            {
+                "label": "Methadone",
+                "value": "Methadone",
+                "type": "str"
+            },
+            {
+                "label": "Adderall",
+                "value": "Adderall",
+                "type": "str"
+            },
+            {
+                "label": "Paracetamol",
+                "value": "Paracetamol",
+                "type": "str"
+            },
+            {
+                "label": "Ibuprofen",
+                "value": "Ibuprofen",
+                "type": "str"
+            },
+            {
+                "label": "Loratadine",
+                "value": "Loratadine",
+                "type": "str"
+            },
+            {
+                "label": "Ranitidine",
+                "value": "Ranitidine",
+                "type": "str"
+            },
+            {
+                "label": "Vitamin C",
+                "value": "Vitamin C",
                 "type": "str"
             }
         ],
@@ -197,7 +242,7 @@
         "type": "function",
         "z": "e6fc873145b0a448",
         "name": "Build Object",
-        "func": "// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Build the object\n    var data = {\n        amount: amount,\n        medication: medication\n    };\n    // Send the object to the next node (debug node)\n    msg.payload = data;\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n    node.warn(\"undefined fields\");\n}\n\nreturn msg;\n",
+        "func": "\n\n\n\n\n\n\n\n\n\n\n\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Define the list of medications with their security clearances\nvar medicationsList = {\n    \"Fentanyl\": \"High\",\n    \"Morphine\": \"High\",\n    \"OxyContin\": \"High\",\n    \"Methadone\": \"High\",\n    \"Adderall\": \"High\",\n    \"Panadol\": \"Low\", // \n    \"Ibuprofen\": \"Low\",\n    \"Loratadine\": \"Low\",\n    \"Ranitidine\": \"Low\",\n    \"Vitamin C\": \"Low\"\n};\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Check if medication is in the medications list\n    if (medicationsList.hasOwnProperty(medication)) {\n        // Build the object with medication, amount, and level\n        var data = {\n            amount: amount,\n            medication: medication,\n            level: medicationsList[medication] // Add the 'level' field based on medication\n        };\n        // Send the object to the next node (debug node)\n        msg.payload = data;\n    } else {\n        // If medication is not in the list, construct an error object message\n        msg.payload = {\n            error: \"Medication not found in the list\"\n        };\n        node.warn(\"Medication not found in the list\");\n    }\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n    node.warn(\"undefined fields\");\n}\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
