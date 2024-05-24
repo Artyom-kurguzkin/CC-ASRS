@@ -415,7 +415,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -451,12 +451,12 @@
         "id": "a95860137df9ad52",
         "type": "ui_template",
         "z": "e6fc873145b0a448",
-        "group": "d8b6d191.994608",
+        "group": "7bec1ed418fad541",
         "name": "pharmcist load/retrieve form->",
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/1?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -477,6 +477,27 @@
         "x": 480,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "024709b987b8656c",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "bd2027dddef41de4",
+        "name": "pharmcist retrieve->",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Retrieve Medications</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 500,
+        "y": 160,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "8efbd4578f8ecf11",
@@ -558,8 +579,9 @@
         "type": "ui_tab",
         "name": "Pharmacist load meds",
         "icon": "dashboard",
+        "order": 3,
         "disabled": false,
-        "hidden": false
+        "hidden": true
     },
     {
         "id": "9be72af31adee06c",
@@ -589,8 +611,8 @@
         "type": "ui_tab",
         "name": "Pharmacist load or retrieve?",
         "icon": "dashboard",
-        "order": 5,
+        "order": 2,
         "disabled": false,
-        "hidden": false
+        "hidden": true
     }
 ]
