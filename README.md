@@ -41,16 +41,3 @@ We also use Nodered's dashboard capability for building application's web interf
 
 <br>
 
-
-## Current work items
-
-
-Login screen with functional OAuth2 session
-* Session should have different features available beased on user role
-* Identity-Aware Proxy (IAP) works with Google Identity (can interact with other identity providers as well)
-
-GKE persistent volume
- 
-Databse that keeps track of medications and their location
-
-
