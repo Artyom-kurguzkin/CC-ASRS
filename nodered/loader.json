@@ -19,8 +19,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 540,
+        "x": 1410,
+        "y": 840,
         "wires": [
             [
                 "fdd29b27467bf404",
@@ -39,8 +39,8 @@
         "upsert": false,
         "multi": false,
         "operation": "insert",
-        "x": 890,
-        "y": 540,
+        "x": 1690,
+        "y": 840,
         "wires": [
             [
                 "64dd9fdb495bb68a",
@@ -61,8 +61,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1150,
-        "y": 500,
+        "x": 1950,
+        "y": 800,
         "wires": []
     },
     {
@@ -78,8 +78,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
-        "y": 500,
+        "x": 1660,
+        "y": 800,
         "wires": []
     },
     {
@@ -103,7 +103,7 @@
         "step": 1,
         "className": "",
         "x": 100,
-        "y": 300,
+        "y": 420,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -186,7 +186,7 @@
         "topicType": "msg",
         "className": "",
         "x": 120,
-        "y": 340,
+        "y": 460,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -206,7 +206,7 @@
         "finalize": "",
         "libs": [],
         "x": 330,
-        "y": 320,
+        "y": 440,
         "wires": [
             []
         ]
@@ -231,7 +231,7 @@
         "topic": "",
         "topicType": "str",
         "x": 100,
-        "y": 380,
+        "y": 500,
         "wires": [
             [
                 "406acdd260635eb1"
@@ -242,16 +242,16 @@
         "id": "c571ddb1a2d7cee9",
         "type": "function",
         "z": "e6fc873145b0a448",
-        "name": "Build Object",
-        "func": "\n\n\n\n\n\n\n\n\n\n\n\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Define the list of medications with their security clearances\nvar medicationsList = {\n    \"Fentanyl\": \"High\",\n    \"Morphine\": \"High\",\n    \"OxyContin\": \"High\",\n    \"Methadone\": \"High\",\n    \"Adderall\": \"High\",\n    \"Panadol\": \"Low\", // \n    \"Ibuprofen\": \"Low\",\n    \"Loratadine\": \"Low\",\n    \"Ranitidine\": \"Low\",\n    \"Vitamin C\": \"Low\"\n};\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Check if medication is in the medications list\n    if (medicationsList.hasOwnProperty(medication)) {\n        // Build the object with medication, amount, and level\n        var data = {\n            amount: amount,\n            medication: medication,\n            level: medicationsList[medication] // Add the 'level' field based on medication\n        };\n        // Send the object to the next node (debug node)\n        msg.payload = data;\n    } else {\n        // If medication is not in the list, construct an error object message\n        msg.payload = {\n            error: \"Medication not found in the list\"\n        };\n        node.warn(\"Medication not found in the list\");\n    }\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n    node.warn(\"undefined fields\");\n}\n\nreturn msg;\n",
+        "name": "format input, assign medication clearance",
+        "func": "\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Define the list of medications with their security clearances\nvar medicationsList = {\n    \"Fentanyl\": \"High\",\n    \"Morphine\": \"High\",\n    \"OxyContin\": \"High\",\n    \"Methadone\": \"High\",\n    \"Adderall\": \"High\",\n    \"Panadol\": \"Low\", // \n    \"Ibuprofen\": \"Low\",\n    \"Loratadine\": \"Low\",\n    \"Ranitidine\": \"Low\",\n    \"Vitamin C\": \"Low\"\n};\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Check if medication is in the medications list\n    if (medicationsList.hasOwnProperty(medication)) {\n        // Build the object with medication, amount, and level\n        var data = {\n            amount: amount,\n            medication: medication,\n            level: medicationsList[medication] // Add the 'level' field based on medication\n        };\n        // Send the object to the next node (debug node)\n        msg.payload = data;\n    } else {\n        // If medication is not in the list, construct an error object message\n        msg.payload = {\n            error: \"Medication not found in the list\"\n        };\n        node.warn(\"Medication not found in the list\");\n    }\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n    node.warn(\"undefined fields\");\n}\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
-        "y": 540,
+        "x": 1380,
+        "y": 720,
         "wires": [
             [
                 "9aa5b9070aee3f3e"
@@ -262,19 +262,19 @@
         "id": "406acdd260635eb1",
         "type": "function",
         "z": "e6fc873145b0a448",
-        "name": "come up with coordinates",
-        "func": "\nreturn msg;",
+        "name": "ask which locations are busy",
+        "func": "msg.payload = {};\nmsg.projection = { \"_location\": 1, \"_id\": 0 };\n\n// Set the MongoDB operation\nmsg.operation = \"find\";\nnode.warn('Operation: ' + msg.operation);\n\nreturn msg;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
-        "y": 380,
+        "x": 380,
+        "y": 500,
         "wires": [
             [
-                "f9b0adcab224b4ce"
+                "44150b37bbe931d2"
             ]
         ]
     },
@@ -282,19 +282,19 @@
         "id": "f9b0adcab224b4ce",
         "type": "function",
         "z": "e6fc873145b0a448",
-        "name": "send command to the robot",
-        "func": "\nreturn msg;",
+        "name": "decide where to put meds",
+        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.filter(loc => loc._location).map(loc => loc._location);\nlet existingLocationsSet = new Set(existingLocations);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the range limits\nconst xRange = 1000;\nconst yRange = 1000;\n\n// Determine locations for the boxes\nlet boxLocations = [];\n\nouterLoop:\nfor (let x = 1; x <= xRange; x++) {\n    for (let y = 1; y <= yRange; y++) {\n        let location = `${x}, ${y}`;\n        if (!existingLocationsSet.has(location)) {\n            boxLocations.push(location);\n            if (boxLocations.length >= amount) {\n                break outerLoop;\n            }\n        }\n    }\n}\n\n// Set the box locations in the message payload\nmsg.payload = boxLocations;\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 380,
+        "x": 370,
+        "y": 600,
         "wires": [
             [
-                "a404e5f2b96a8418"
+                "644d0c3d6e0e33ed"
             ]
         ]
     },
@@ -311,11 +311,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 840,
-        "y": 420,
+        "x": 860,
+        "y": 700,
         "wires": [
             [
-                "49ecd4ee0711be0e"
+                "f4af976202682fdf"
             ]
         ]
     },
@@ -333,8 +333,8 @@
         "correl": "",
         "expiry": "",
         "broker": "ce684d0833c30503",
-        "x": 840,
-        "y": 380,
+        "x": 860,
+        "y": 820,
         "wires": []
     },
     {
@@ -349,8 +349,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 480,
+        "x": 1360,
+        "y": 620,
         "wires": [
             [
                 "c571ddb1a2d7cee9"
@@ -364,7 +364,7 @@
         "name": "important!",
         "info": "we store input into context variables, \nso we don't need to connect this function to anything",
         "x": 480,
-        "y": 320,
+        "y": 440,
         "wires": []
     },
     {
@@ -379,8 +379,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1190,
-        "y": 540,
+        "x": 1990,
+        "y": 840,
         "wires": [
             []
         ]
@@ -390,7 +390,7 @@
         "type": "ui_text",
         "z": "e6fc873145b0a448",
         "group": "7bec1ed418fad541",
-        "order": 0,
+        "order": 8,
         "width": 0,
         "height": 0,
         "name": "",
@@ -415,7 +415,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/1?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -434,7 +434,7 @@
         "name": "Pharmacist loads meds gui",
         "info": "",
         "x": 150,
-        "y": 260,
+        "y": 380,
         "wires": []
     },
     {
@@ -453,10 +453,10 @@
         "z": "e6fc873145b0a448",
         "group": "7bec1ed418fad541",
         "name": "pharmcist load/retrieve form->",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/1?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Load Medications</button>",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=zBDDOfDknqT46cbtAAFh';\" style=\"height:44px;line-height:44px\">Load Medications</button>\n",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -497,6 +497,129 @@
         "y": 160,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "faa0558c18aa4097",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "7bec1ed418fad541",
+        "name": "pharmcist browse meds->",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/1?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">Browse inventory</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 150,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "122d15e7c4bb5c3c",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "7bec1ed418fad541",
+        "name": "pharmcist view history->",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/1?socketid=RAlCQ1FdffExpqvqAAEt';\" style=\"height:44px;line-height:44px\">View history log</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "44150b37bbe931d2",
+        "type": "mongodb-aleph-in",
+        "z": "e6fc873145b0a448",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "get locations",
+        "collection": "Medications",
+        "operation": "find",
+        "x": 790,
+        "y": 500,
+        "wires": [
+            [
+                "f9b0adcab224b4ce"
+            ]
+        ]
+    },
+    {
+        "id": "f4af976202682fdf",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1280,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "644d0c3d6e0e33ed",
+        "type": "loop",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "kind": "enum",
+        "count": "",
+        "initial": "1",
+        "step": "1",
+        "condition": "",
+        "conditionType": "js",
+        "when": "before",
+        "enumeration": "payload",
+        "enumerationType": "msg",
+        "limit": "",
+        "loopPayload": "loop-val",
+        "finalPayload": "final-count",
+        "x": 650,
+        "y": 600,
+        "wires": [
+            [],
+            [
+                "67861dcf62ae051e"
+            ]
+        ]
+    },
+    {
+        "id": "67861dcf62ae051e",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "send coordinates to the robot",
+        "func": "// Extract the value content from the message object\nlet value = msg.payload;\n\n// Remove any commas and spaces from the value\nvalue = value.replace(/[\\s,]/g, '');\n\n// Ensure the value is converted to a string and prepend \"0\"\nlet newValue = \"0\" + value;\n\n// Output an array containing both messages\nreturn [\n    { ...msg },  // Original message\n    { payload: newValue } // New message with the modified value\n];\n\n\n// Extract the value content from the message object\n//let value = msg.loop.value;\n\n// Construct two separate messages\n//let message1 = { ...msg }; // Original message\n//let message2 = { payload: value }; // Message containing the extracted value content\n\n// Output an array containing both messages\n//return [message1, message2];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 720,
+        "wires": [
+            [
+                "644d0c3d6e0e33ed"
+            ],
+            [
+                "a404e5f2b96a8418"
+            ]
         ]
     },
     {
@@ -579,9 +702,9 @@
         "type": "ui_tab",
         "name": "Pharmacist load meds",
         "icon": "dashboard",
-        "order": 3,
+        "order": 2,
         "disabled": false,
-        "hidden": true
+        "hidden": false
     },
     {
         "id": "9be72af31adee06c",
@@ -611,8 +734,8 @@
         "type": "ui_tab",
         "name": "Pharmacist load or retrieve?",
         "icon": "dashboard",
-        "order": 2,
+        "order": 3,
         "disabled": false,
-        "hidden": true
+        "hidden": false
     }
 ]
