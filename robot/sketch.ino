@@ -90,25 +90,13 @@ AccelStepper stepper4(1, stepPin4, dirPin4);
 
 
 void setup_wifi() {
-  delay(10);
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
- // WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password, 6);
-
+  Serial.print("Connecting to WiFi");
+  WiFi.begin("Wokwi-GUEST", "", 6);
   while (WiFi.status() != WL_CONNECTED) {
     delay(100);
     Serial.print(".");
   }
-
-  randomSeed(micros());
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial.println(" Connected!");
 }
 
 
