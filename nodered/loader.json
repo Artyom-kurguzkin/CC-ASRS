@@ -19,8 +19,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1410,
-        "y": 840,
+        "x": 670,
+        "y": 800,
         "wires": [
             [
                 "fdd29b27467bf404",
@@ -39,12 +39,12 @@
         "upsert": false,
         "multi": false,
         "operation": "insert",
-        "x": 1690,
-        "y": 840,
+        "x": 950,
+        "y": 820,
         "wires": [
             [
                 "64dd9fdb495bb68a",
-                "dd84c4042fa90ad1"
+                "aa6f4a563854c447"
             ]
         ]
     },
@@ -61,8 +61,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1950,
-        "y": 800,
+        "x": 1190,
+        "y": 780,
         "wires": []
     },
     {
@@ -78,8 +78,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1660,
-        "y": 800,
+        "x": 920,
+        "y": 780,
         "wires": []
     },
     {
@@ -197,15 +197,15 @@
         "id": "43c651aeb5a1601a",
         "type": "function",
         "z": "e6fc873145b0a448",
-        "name": "Store Input",
-        "func": "if (typeof msg.payload === 'number' && Number.isInteger(msg.payload)) {\n    // If payload is an integer, set 'amount' to its value\n    flow.set('amount', msg.payload);;\n    node.warn(\"Amount received and stored in flow context\");\n} else if (typeof msg.payload === 'string') {\n    var medicationName = msg.payload; // Extract medication name from the string\n    flow.set('medication', medicationName);\n    node.warn(\"Medication received and stored in flow context: \" + medicationName);\n} else {\n    // Log if payload does not contain expected properties\n    node.warn(\"Payload does not contain 'amount' or 'medication'. Payload: \" + JSON.stringify(msg.payload));\n}\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both values are available\nif (amount !== undefined && medication !== undefined) {\n    // Both values are available, build the object\n    msg.payload = {\n        amount: amount,\n        medication: medication\n    };\n    node.warn(\"Both values are available, proceeding with msg: \" + JSON.stringify(msg.payload));\n\n    // Optionally, you can decide not to clear the stored values if you need them later\n    // global.set('amount', undefined);\n    // global.set('medication', undefined);\n\n    return msg;\n} else {\n    // If either amount or medication is not yet received, wait for it\n    node.warn(\"Waiting for both values to be received.\");\n    return null;\n}\n",
+        "name": "aggregate Input",
+        "func": "if (typeof msg.payload === 'number' && Number.isInteger(msg.payload)) {\n    // If payload is an integer, set 'amount' to its value\n    flow.set('amount', msg.payload);\n    node.warn(\"Amount received and stored in flow context\");\n} else if (typeof msg.payload === 'string') {\n    var medicationName = msg.payload; // Extract medication name from the string\n    flow.set('medication', medicationName);\n    node.warn(\"Medication received and stored in flow context: \" + medicationName);\n} else {\n    // Log if payload does not contain expected properties\n    node.warn(\"Payload does not contain 'amount' or 'medication'. Payload: \" + JSON.stringify(msg.payload));\n}\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both values are available\nif (amount !== undefined && medication !== undefined) {\n    // Both values are available, build the object\n    msg.payload = {\n        amount: amount,\n        medication: medication\n    };\n    node.warn(\"Both values are available, proceeding with msg: \" + JSON.stringify(msg.payload));\n\n    // Optionally, you can decide not to clear the stored values if you need them later\n    // global.set('amount', undefined);\n    // global.set('medication', undefined);\n\n    return msg;\n} else {\n    // If either amount or medication is not yet received, wait for it\n    node.warn(\"Waiting for both values to be received.\");\n    return null;\n}\n",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
+        "x": 340,
         "y": 440,
         "wires": [
             []
@@ -250,8 +250,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1380,
-        "y": 720,
+        "x": 360,
+        "y": 800,
         "wires": [
             [
                 "9aa5b9070aee3f3e"
@@ -283,7 +283,7 @@
         "type": "function",
         "z": "e6fc873145b0a448",
         "name": "decide where to put meds",
-        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.filter(loc => loc._location).map(loc => loc._location);\nlet existingLocationsSet = new Set(existingLocations);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the range limits\nconst xRange = 1000;\nconst yRange = 1000;\n\n// Determine locations for the boxes\nlet boxLocations = [];\n\nouterLoop:\nfor (let x = 1; x <= xRange; x++) {\n    for (let y = 1; y <= yRange; y++) {\n        let location = `${x}, ${y}`;\n        if (!existingLocationsSet.has(location)) {\n            boxLocations.push(location);\n            if (boxLocations.length >= amount) {\n                break outerLoop;\n            }\n        }\n    }\n}\n\n// Set the box locations in the message payload\nmsg.payload = boxLocations;\nreturn msg;\n",
+        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.filter(loc => loc._location).map(loc => loc._location);\nlet existingLocationsSet = new Set(existingLocations);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the range limits\nconst xRange = 1000;\nconst yRange = 1000;\n\n// Determine locations for the boxes\nlet boxLocations = [];\n\nouterLoop:\nfor (let x = 1; x <= xRange; x++) {\n    for (let y = 1; y <= yRange; y++) {\n        let location = `${x}, ${y}`;\n        if (!existingLocationsSet.has(location)) {\n            boxLocations.push(location);\n            if (boxLocations.length >= amount) {\n                break outerLoop;\n            }\n        }\n    }\n}\n\n// Set the box locations in the message payload\nflow.set('locations', boxLocations);\nmsg.payload = boxLocations;\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -311,11 +311,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 860,
-        "y": 700,
+        "x": 100,
+        "y": 800,
         "wires": [
             [
-                "f4af976202682fdf"
+                "c571ddb1a2d7cee9"
             ]
         ]
     },
@@ -333,29 +333,9 @@
         "correl": "",
         "expiry": "",
         "broker": "ce684d0833c30503",
-        "x": 860,
-        "y": 820,
+        "x": 880,
+        "y": 720,
         "wires": []
-    },
-    {
-        "id": "49ecd4ee0711be0e",
-        "type": "function",
-        "z": "e6fc873145b0a448",
-        "name": "receive confirmation",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1360,
-        "y": 620,
-        "wires": [
-            [
-                "c571ddb1a2d7cee9"
-            ]
-        ]
     },
     {
         "id": "a96f4f422554ace5",
@@ -366,24 +346,6 @@
         "x": 480,
         "y": 440,
         "wires": []
-    },
-    {
-        "id": "dd84c4042fa90ad1",
-        "type": "function",
-        "z": "e6fc873145b0a448",
-        "name": "redirect to confirmation screen",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1990,
-        "y": 840,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "98e9b415f5570edb",
@@ -558,26 +520,10 @@
         ]
     },
     {
-        "id": "f4af976202682fdf",
-        "type": "debug",
-        "z": "e6fc873145b0a448",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1280,
-        "y": 440,
-        "wires": []
-    },
-    {
         "id": "644d0c3d6e0e33ed",
         "type": "loop",
         "z": "e6fc873145b0a448",
-        "name": "",
+        "name": "iterate through boxes",
         "kind": "enum",
         "count": "",
         "initial": "1",
@@ -590,7 +536,7 @@
         "limit": "",
         "loopPayload": "loop-val",
         "finalPayload": "final-count",
-        "x": 650,
+        "x": 660,
         "y": 600,
         "wires": [
             [],
@@ -619,6 +565,138 @@
             ],
             [
                 "a404e5f2b96a8418"
+            ]
+        ]
+    },
+    {
+        "id": "ccc0e36a1961c0c9",
+        "type": "ui_text",
+        "z": "e6fc873145b0a448",
+        "group": "61150425cb319fef",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Medications have been successfully loaded",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 890,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "741206cc7d66160a",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "61150425cb319fef",
+        "name": "Pharmacist menu->",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/0?socketid=lgx8S6uDQG5pfnQSAAGh';\" style=\"height:44px;line-height:44px\">back to the main menu</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 810,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e32942dc5bf38017",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist loaded meds confirmation",
+        "info": "Medications loaded",
+        "x": 870,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8f4d5f1a.1ec8e",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "Redirect Function",
+        "func": "\nvar redirectUrl = \"http://34.151.86.177/ui/#!/4?socketid=Q9n8Pj82xDbkfeXdAAGl\"; // Change this to your desired URL\n\n// Pass the URL to the template node\nnode.warn(\"redirecting!\");\nmsg.template = `<script>window.location.href = \"${redirectUrl}\";</script>`;\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 640,
+        "wires": [
+            [
+                "d9466c6b.3f586"
+            ]
+        ]
+    },
+    {
+        "id": "d9466c6b.3f586",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "61150425cb319fef",
+        "name": "Redirect Template",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1380,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ec140838b7a0806",
+        "type": "ui_ui_control",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "events": "all",
+        "x": 1340,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa6f4a563854c447",
+        "type": "change",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"tab\":\"Pharmacist loaded meds confirmation\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1180,
+        "y": 820,
+        "wires": [
+            [
+                "4ec140838b7a0806"
             ]
         ]
     },
@@ -698,6 +776,15 @@
         "className": ""
     },
     {
+        "id": "61150425cb319fef",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "e0b3a0cd5f8f3298",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
         "id": "91da677bce3bf414",
         "type": "ui_tab",
         "name": "Pharmacist load meds",
@@ -735,6 +822,15 @@
         "name": "Pharmacist load or retrieve?",
         "icon": "dashboard",
         "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e0b3a0cd5f8f3298",
+        "type": "ui_tab",
+        "name": "Pharmacist loaded meds confirmation",
+        "icon": "dashboard",
+        "order": 6,
         "disabled": false,
         "hidden": false
     }
