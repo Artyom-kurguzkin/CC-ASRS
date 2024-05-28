@@ -43,8 +43,8 @@
         "y": 820,
         "wires": [
             [
-                "64dd9fdb495bb68a",
-                "aa6f4a563854c447"
+                "aa6f4a563854c447",
+                "64dd9fdb495bb68a"
             ]
         ]
     },
@@ -243,16 +243,19 @@
         "type": "function",
         "z": "e6fc873145b0a448",
         "name": "format input, assign medication clearance",
-        "func": "\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\n// Define the list of medications with their security clearances\nvar medicationsList = {\n    \"Fentanyl\": \"High\",\n    \"Morphine\": \"High\",\n    \"OxyContin\": \"High\",\n    \"Methadone\": \"High\",\n    \"Adderall\": \"High\",\n    \"Panadol\": \"Low\", // \n    \"Ibuprofen\": \"Low\",\n    \"Loratadine\": \"Low\",\n    \"Ranitidine\": \"Low\",\n    \"Vitamin C\": \"Low\"\n};\n\n// Debug messages to check if values are retrieved\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both fields are filled\nif (amount !== undefined && medication !== undefined) {\n    // Check if medication is in the medications list\n    if (medicationsList.hasOwnProperty(medication)) {\n        // Build the object with medication, amount, and level\n        var data = {\n            amount: amount,\n            medication: medication,\n            level: medicationsList[medication] // Add the 'level' field based on medication\n        };\n        // Send the object to the next node (debug node)\n        msg.payload = data;\n    } else {\n        // If medication is not in the list, construct an error object message\n        msg.payload = {\n            error: \"Medication not found in the list\"\n        };\n        node.warn(\"Medication not found in the list\");\n    }\n} else {\n    // If any field is missing, construct an error object message\n    msg.payload = {\n        error: \"Please fill in both fields\"\n    };\n    node.warn(\"undefined fields\");\n}\n\nreturn msg;\n",
-        "outputs": 1,
+        "func": "var medication = flow.get('medication');\n\n// Define the list of medications with their security clearances\nvar medicationsList = {\n    \"Fentanyl\": \"High\",\n    \"Morphine\": \"High\",\n    \"OxyContin\": \"High\",\n    \"Methadone\": \"High\",\n    \"Adderall\": \"High\",\n    \"Panadol\": \"Low\", // \n    \"Ibuprofen\": \"Low\",\n    \"Loratadine\": \"Low\",\n    \"Ranitidine\": \"Low\",\n    \"Vitamin C\": \"Low\"\n};\n\n\nvar data = {\n    medication: medication,\n    level: medicationsList[medication], // Add the 'level' field based on medication\n    location: msg.payload\n};\n\n\nreturn [\n    { ...msg },  // Original message\n    { payload: data } // New message with the modified value\n];\n",
+        "outputs": 2,
         "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 800,
+        "x": 280,
+        "y": 920,
         "wires": [
+            [
+                "ece2dd1f6e9e23cd"
+            ],
             [
                 "9aa5b9070aee3f3e"
             ]
@@ -311,11 +314,11 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 100,
-        "y": 800,
+        "x": 80,
+        "y": 680,
         "wires": [
             [
-                "c571ddb1a2d7cee9"
+                "9bd8de9b19817b38"
             ]
         ]
     },
@@ -396,7 +399,7 @@
         "name": "Pharmacist loads meds gui",
         "info": "",
         "x": 150,
-        "y": 380,
+        "y": 340,
         "wires": []
     },
     {
@@ -449,7 +452,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=0EwNCgcSkz28SjSFAAAH';\" style=\"height:44px;line-height:44px\">Retrieve Medications</button>",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/5?socketid=sUndJgTW0xQ1MnQ0AAG7';\" style=\"height:44px;line-height:44px\">Retrieve Medications</button>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
@@ -621,47 +624,6 @@
         "wires": []
     },
     {
-        "id": "8f4d5f1a.1ec8e",
-        "type": "function",
-        "z": "e6fc873145b0a448",
-        "name": "Redirect Function",
-        "func": "\nvar redirectUrl = \"http://34.151.86.177/ui/#!/4?socketid=Q9n8Pj82xDbkfeXdAAGl\"; // Change this to your desired URL\n\n// Pass the URL to the template node\nnode.warn(\"redirecting!\");\nmsg.template = `<script>window.location.href = \"${redirectUrl}\";</script>`;\n\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1170,
-        "y": 640,
-        "wires": [
-            [
-                "d9466c6b.3f586"
-            ]
-        ]
-    },
-    {
-        "id": "d9466c6b.3f586",
-        "type": "ui_template",
-        "z": "e6fc873145b0a448",
-        "group": "61150425cb319fef",
-        "name": "Redirect Template",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "format": "",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 1380,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "4ec140838b7a0806",
         "type": "ui_ui_control",
         "z": "e6fc873145b0a448",
@@ -701,6 +663,89 @@
         ]
     },
     {
+        "id": "5debc5ce4b46ce5c",
+        "type": "ui_text",
+        "z": "e6fc873145b0a448",
+        "group": "d8b6d191.994608",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Load Medications (Pharmacist)",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 170,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ece2dd1f6e9e23cd",
+        "type": "loop",
+        "z": "e6fc873145b0a448",
+        "name": "iterate through coordinates",
+        "kind": "enum",
+        "count": "",
+        "initial": "1",
+        "step": "1",
+        "condition": "",
+        "conditionType": "js",
+        "when": "before",
+        "enumeration": "payload",
+        "enumerationType": "msg",
+        "limit": "",
+        "loopPayload": "loop-val",
+        "finalPayload": "final-count",
+        "x": 340,
+        "y": 800,
+        "wires": [
+            [],
+            [
+                "c571ddb1a2d7cee9"
+            ]
+        ]
+    },
+    {
+        "id": "9bd8de9b19817b38",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "function 9",
+        "func": "// Get the current time\nvar currentTime = new Date().getTime();\n\n// Get the last processed time from the flow context\nvar lastProcessedTime = flow.get('lastProcessedTime') || 0;\n\n// Calculate the difference in seconds\nvar timeDifference = (currentTime - lastProcessedTime) / 1000;\n\n// Only proceed if at least 30 seconds have passed\nif (timeDifference >= 30) {\n    // Update the last processed time in the flow context\n    flow.set('lastProcessedTime', currentTime);\n\n    // Proceed with the message\n    msg.payload = flow.get('locations')\n    return msg;\n}\n\n// If less than 30 seconds have passed, do not proceed\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 740,
+        "wires": [
+            [
+                "ece2dd1f6e9e23cd"
+            ]
+        ]
+    },
+    {
+        "id": "a74ae124225470a8",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 900,
+        "wires": []
+    },
+    {
         "id": "8efbd4578f8ecf11",
         "type": "mongodb-aleph-config",
         "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
@@ -713,7 +758,7 @@
     {
         "id": "d8b6d191.994608",
         "type": "ui_group",
-        "name": "load meds menu",
+        "name": "load menu",
         "tab": "91da677bce3bf414",
         "order": 2,
         "disp": true,
