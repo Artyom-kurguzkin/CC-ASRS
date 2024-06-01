@@ -12,23 +12,13 @@ Contributors: Mauro Turci, Alexandria Foss, Het Patel, Danil Sayus, Ajay Kishan,
 
 The project aims to model Automated Storage and Retrieval System in a pharmacy. The solution controls access and sorting of medications using web dashboard and a robot.
 
-ESP32 acts as a Programmable Logic Controller directly interfacing with sensors and actuators.
+For more in-depth overview visit our [Wiki](https://github.com/Artyom-kurguzkin/CC-ASRS/wiki)
 
-Nodered acts as Programmable Automation Controller reposnible for application logic.
 
-We also use Nodered's dashboard capability for building application's web interface.
 
 <br>
 
 ---
-
-<br>
-
-## Table of Contents
-
-**[Features & User stories](#features-&-User-stories)**
-
-**[Current work items](#Current-work-items)**
 
 <br>
 
