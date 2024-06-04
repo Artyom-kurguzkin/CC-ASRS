@@ -22,7 +22,55 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
 
+      form {
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+          font-weight: bold;
+          margin-bottom: 8px;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 20px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          font-size: 16px;
+      }
+
+      button[type="submit"] {
+          background-color: #007bff;
+          color: #ffffff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+      }
+
+      button[type="submit"]:hover {
+          background-color: #0056b3;
+      }
+  </style>
     
   </head>
   <body>
@@ -73,7 +121,7 @@
                 if (userName.toLowerCase() === "alicepharmacist") {
                     window.location.href = "http://34.151.86.177/ui/#!/0?socketid=HxzMq6Yc0o7lBZnNAABR";
                 } else if (userName.toLowerCase() === "bobstaff") {
-                    window.location.href = "http://34.151.86.177/ui/#!/1?socketid=HxzMq6Yc0o7lBZnNAABR";
+                    window.location.href = "http://34.151.86.177/ui/#!/6?socketid=GJUsJPyB5yRs4mskAALy";
                 } else {
                     console.log("Unknown user, no redirection.");
                 }
