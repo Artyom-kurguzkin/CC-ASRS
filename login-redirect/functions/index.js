@@ -1,26 +1,53 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require('firebase-functions');
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const axios = require('axios');
+const cors = require('cors');
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+const app = express();
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+app.use(cors());
 
-const express = require('express')
-const app = express()
+app.use(express.json());
+app.use(express.urlencoded({extended: true})); 
 
-app.listen(8080, () => {
-    console.log('Listening ...')
-  })
+
+
+// check who logs in and log!
+app.post('/login', (req, res) => {
+    
+    const { email } = req.body;
+    axios.post('http://34.151.86.177/logUser', email);
+    console.log( req.body );
+
+    let redirectUrl; // Define redirectUrl outside the if-else blocks
+    if (userName.toLowerCase() === "alicepharmacist") {
+        redirectUrl = "http://34.151.86.177/ui/#!/0?socketid=HxzMq6Yc0o7lBZnNAABR";
+    } else if (userName.toLowerCase() === "bobstaff") {
+        redirectUrl = "http://34.151.86.177/ui/#!/1?socketid=HxzMq6Yc0o7lBZnNAABR";
+    } else {
+        redirectUrl = "https://www.google.com";
+    }
+
+    res.json({ redirectUrl });
+});
+
+
+// serve login page
+app.get('/', (req, res) => {
+    const filePath = path.join(__dirname, '..', 'public', 'index.html');
+  
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading index.html:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+  
+        res.send(data);
+    });
+});
+
+exports.app = functions.https.onRequest(app);
+//exports.app = functions.region('australia-southeast2').https.onRequest(app);

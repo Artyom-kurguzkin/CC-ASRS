@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +23,55 @@
       to avoid connecting the SDK to running emulators.
     -->
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+      }
 
+      form {
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+          font-weight: bold;
+          margin-bottom: 8px;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 20px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          font-size: 16px;
+      }
+
+      button[type="submit"] {
+          background-color: #007bff;
+          color: #ffffff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+      }
+
+      button[type="submit"]:hover {
+          background-color: #0056b3;
+      }
+  </style>
     
   </head>
   <body>
@@ -66,21 +115,38 @@
         }
 
         function googleLogin(email, password){
-            firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
-                const user = result.user;
-                const userName = extractUserName(user.email); // Extract user name from email
-                // Redirect based on user name
-                if (userName.toLowerCase() === "alicepharmacist") {
-                    window.location.href = "http://34.151.86.177/ui/#!/0?socketid=HxzMq6Yc0o7lBZnNAABR";
-                } else if (userName.toLowerCase() === "bobstaff") {
-                    window.location.href = "http://34.151.86.177/ui/#!/1?socketid=HxzMq6Yc0o7lBZnNAABR";
-                } else {
-                    console.log("Unknown user, no redirection.");
-                }
-            }).catch(error => {
-                console.error('Error:', error.message);
-                alert("Error: " + error.message);
-            });
+          firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
+        const user = result.user;
+        const userName = extractUserName(user.email); // Extract user name from email
+
+        // Create a fetch request to post the username and redirect
+        fetch('https://example.com/post_username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: userName })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const redirectUrl = data.redirect_url;
+            // Redirect the user to the received URL
+            window.location.href = redirectUrl;
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }).catch(error => {
+        // Handle login errors
+        console.error("Error signing in:", error);
+    });
+                
         }
 
         // Function to extract user name from email
