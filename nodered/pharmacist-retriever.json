@@ -1,0 +1,467 @@
+[
+    {
+        "id": "a5fe95724ba1480a",
+        "type": "tab",
+        "label": "Pharmacist retrieve",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e2f95c461f21c26a",
+        "type": "ui_numeric",
+        "z": "a5fe95724ba1480a",
+        "name": "Amount",
+        "label": "Amount",
+        "tooltip": "",
+        "group": "44f0fe01877f1a8e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "amount",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "10",
+        "step": 1,
+        "className": "",
+        "x": 80,
+        "y": 180,
+        "wires": [
+            [
+                "f8f013ad721d912d"
+            ]
+        ]
+    },
+    {
+        "id": "1692bc88ade6bfa1",
+        "type": "ui_dropdown",
+        "z": "a5fe95724ba1480a",
+        "name": "Medication Type",
+        "label": "Medication Type",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "44f0fe01877f1a8e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Panadol",
+                "value": "Panadol",
+                "type": "str"
+            },
+            {
+                "label": "Fentanyl",
+                "value": "Fentanyl",
+                "type": "str"
+            },
+            {
+                "label": "Morphine",
+                "value": "Morphine",
+                "type": "str"
+            },
+            {
+                "label": "OxyContin",
+                "value": "OxyContin",
+                "type": "str"
+            },
+            {
+                "label": "Methadone",
+                "value": "Methadone",
+                "type": "str"
+            },
+            {
+                "label": "Adderall",
+                "value": "Adderall",
+                "type": "str"
+            },
+            {
+                "label": "Paracetamol",
+                "value": "Paracetamol",
+                "type": "str"
+            },
+            {
+                "label": "Ibuprofen",
+                "value": "Ibuprofen",
+                "type": "str"
+            },
+            {
+                "label": "Loratadine",
+                "value": "Loratadine",
+                "type": "str"
+            },
+            {
+                "label": "Ranitidine",
+                "value": "Ranitidine",
+                "type": "str"
+            },
+            {
+                "label": "Vitamin C",
+                "value": "Vitamin C",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "medication",
+        "topicType": "msg",
+        "className": "",
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "f8f013ad721d912d"
+            ]
+        ]
+    },
+    {
+        "id": "f8f013ad721d912d",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "aggregate Input",
+        "func": "if (typeof msg.payload === 'number' && Number.isInteger(msg.payload)) {\n    // If payload is an integer, set 'amount' to its value\n    flow.set('amount', msg.payload);\n    node.warn(\"Amount received and stored in flow context\");\n} else if (typeof msg.payload === 'string') {\n    var medicationName = msg.payload; // Extract medication name from the string\n    flow.set('medication', medicationName);\n    node.warn(\"Medication received and stored in flow context: \" + medicationName);\n} else {\n    // Log if payload does not contain expected properties\n    node.warn(\"Payload does not contain 'amount' or 'medication'. Payload: \" + JSON.stringify(msg.payload));\n}\n\n// Retrieve both amount and medication from global context\nvar amount = flow.get('amount');\nvar medication = flow.get('medication');\n\nnode.warn(\"Retrieved amount from flow context: \" + amount);\nnode.warn(\"Retrieved medication from flow context: \" + medication);\n\n// Check if both values are available\nif (amount !== undefined && medication !== undefined) {\n    // Both values are available, build the object\n    msg.payload = {\n        amount: amount,\n        medication: medication\n    };\n    node.warn(\"Both values are available, proceeding with msg: \" + JSON.stringify(msg.payload));\n\n    // Optionally, you can decide not to clear the stored values if you need them later\n    // global.set('amount', undefined);\n    // global.set('medication', undefined);\n\n    return msg;\n} else {\n    // If either amount or medication is not yet received, wait for it\n    node.warn(\"Waiting for both values to be received.\");\n    return null;\n}\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d512aa2f7601e896",
+        "type": "ui_button",
+        "z": "a5fe95724ba1480a",
+        "name": "Confirm",
+        "group": "44f0fe01877f1a8e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Confirm",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 80,
+        "y": 260,
+        "wires": [
+            [
+                "6429181e2d2a2afa"
+            ]
+        ]
+    },
+    {
+        "id": "6429181e2d2a2afa",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "search for the meds",
+        "func": "// Extract the medication from the input message payload\nvar medication = flow.get('medication'); \n\n// Ensure medication is defined\nif (medication) {\n    // Set the MongoDB query to look for the specified medication\n    msg.query = { Medication: medication };\n    node.warn('Query: ' + JSON.stringify(msg.query));\n\n    // Set the MongoDB projection to include only the Location field\n    msg.projection = { Location: 1, Medication: 1, _id: 0 };\n    node.warn('Projection: ' + JSON.stringify(msg.projection));\n\n    // Set the MongoDB operation\n    msg.operation = \"find\";\n    node.warn('Operation: ' + msg.operation);\n} else {\n    node.warn('No medication specified in payload');\n}\n\n// Return the msg object to proceed with the MongoDB operation\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 260,
+        "wires": [
+            [
+                "51f883deaf9de2e6"
+            ]
+        ]
+    },
+    {
+        "id": "225a277a7ae62537",
+        "type": "comment",
+        "z": "a5fe95724ba1480a",
+        "name": "important!",
+        "info": "we store input into context variables, \nso we don't need to connect this function to anything",
+        "x": 460,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "b8433ea28537ec01",
+        "type": "comment",
+        "z": "a5fe95724ba1480a",
+        "name": "Pharmacist retrieves meds gui",
+        "info": "",
+        "x": 140,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "51f883deaf9de2e6",
+        "type": "mongodb-aleph-in",
+        "z": "a5fe95724ba1480a",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "get locations",
+        "collection": "Medications",
+        "operation": "find",
+        "x": 1072.765625,
+        "y": 260.75,
+        "wires": [
+            [
+                "4810b15b655c4a37"
+            ]
+        ]
+    },
+    {
+        "id": "3b28258131496830",
+        "type": "ui_text",
+        "z": "a5fe95724ba1480a",
+        "group": "44f0fe01877f1a8e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Retrieve Medications (Pharmacist)",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 162.765625,
+        "y": 140.75,
+        "wires": []
+    },
+    {
+        "id": "60a0f608bcfe0e8c",
+        "type": "comment",
+        "z": "a5fe95724ba1480a",
+        "name": "note",
+        "info": "returns all medications instead of selected ones, so we filter afterwards",
+        "x": 1092.765625,
+        "y": 220.75,
+        "wires": []
+    },
+    {
+        "id": "4810b15b655c4a37",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "filter out the meds we want",
+        "func": "// Extract the medication from the flow context\nvar medication = flow.get('medication');\n\n// Initialize an empty array to store filtered results\nvar filteredLocations = [];\n\n// Ensure medication is defined\nif (medication) {\n    // Iterate through each object in the payload\n    for (var i = 0; i < msg.payload.length; i++) {\n        // Check if the medication in the current object matches the specified medication\n        if (msg.payload[i].Medication === medication) {\n            // If it matches, add the location to the filtered array\n            filteredLocations.push(msg.payload[i].Location);\n        }\n    }\n\n    // Output the filtered locations\n    msg.payload = filteredLocations;\n    node.warn('Filtered Locations: ' + JSON.stringify(msg.payload));\n} else {\n    node.warn('No medication specified in flow context');\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 320,
+        "wires": [
+            [
+                "8143078a3089f004"
+            ]
+        ]
+    },
+    {
+        "id": "31be4b8dce73230f",
+        "type": "comment",
+        "z": "a5fe95724ba1480a",
+        "name": "Partially working",
+        "info": "This flow can delete items from the dataase, but gius are not completely integrated",
+        "x": 480,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "eab885c67a11bec9",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "retrieve meds",
+        "func": "// Extract the medication, level, and location from the input message\nvar medication = msg.payload.medication;\nvar level = msg.payload.level;\nvar location = msg.payload.location;\n\n// Create a new document to insert into the MongoDB collection\nvar newDocument = {\n    Medication: medication,\n    Level: level,\n    Location: location\n};\n\n// Set the payload to the new document\nmsg.payload = newDocument;\n\n// Set the MongoDB operation\nmsg.operation = \"remove\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 400,
+        "wires": [
+            [
+                "d42338f819100a6e"
+            ]
+        ]
+    },
+    {
+        "id": "8143078a3089f004",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "do we have enough?",
+        "func": "var array = msg.payload; // assuming the array is in the payload\n\n// Get the amount from flow context\nvar amount = flow.get('amount');\n\n// Compare the length of the array with the amount\nif (array.length >= amount) {\n    // If array length is greater than or equal to amount, send to output 1\n    return [\n        { payload: array, topic: \"output1\" }, // Original message\n        null // No message payload for the second output\n    ];\n} else {\n    // If array length is less than amount, send to output 2\n    return [\n        null, // No message payload for the first output\n        { payload: array, topic: \"output2\" } // Original message\n    ];\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 400,
+        "wires": [
+            [
+                "eab885c67a11bec9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d42338f819100a6e",
+        "type": "mongodb-aleph-out",
+        "z": "a5fe95724ba1480a",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "remove",
+        "collection": "",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "delete",
+        "x": 1080,
+        "y": 400,
+        "wires": [
+            [
+                "48232629882ae8d1"
+            ]
+        ]
+    },
+    {
+        "id": "2be76fac9a49d70c",
+        "type": "ui_ui_control",
+        "z": "a5fe95724ba1480a",
+        "name": "",
+        "events": "all",
+        "x": 120,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4595e2ea3c75dacb",
+        "type": "change",
+        "z": "a5fe95724ba1480a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"tab\":\"Pharmacist loaded meds confirmation\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 580,
+        "wires": [
+            [
+                "2be76fac9a49d70c"
+            ]
+        ]
+    },
+    {
+        "id": "451ede31e9de3099",
+        "type": "comment",
+        "z": "a5fe95724ba1480a",
+        "name": "redirect to main menu",
+        "info": "",
+        "x": 160,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f70fe1018ef8cfc4",
+        "type": "GSheet",
+        "z": "a5fe95724ba1480a",
+        "creds": "28237053282d9860",
+        "method": "append",
+        "action": "",
+        "sheet": "1WkyWxkbuhL3Y5ejC7HBdERlSD0XdCCEOgDbQu81csgA",
+        "cells": "Sheet1!A2:E1000",
+        "flatten": false,
+        "name": "history file",
+        "x": 1080,
+        "y": 520,
+        "wires": [
+            [
+                "4595e2ea3c75dacb"
+            ]
+        ]
+    },
+    {
+        "id": "48232629882ae8d1",
+        "type": "function",
+        "z": "a5fe95724ba1480a",
+        "name": "log",
+        "func": "var action = flow.get('action');\nvar medication = flow.get('medication');\nvar amount = flow.get('amount');\n\n// Get the current date and time\nvar currentDateTime = new Date().toLocaleString();\n\n// Initialize the result array with the current date/time, user, and action\nvar result = [currentDateTime, medication, action];\n\n// Return the result array\nmsg.payload = result;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 500,
+        "wires": [
+            [
+                "f70fe1018ef8cfc4"
+            ]
+        ]
+    },
+    {
+        "id": "44f0fe01877f1a8e",
+        "type": "ui_group",
+        "name": "retrieve",
+        "tab": "3e5d7ee7119b6b52",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8efbd4578f8ecf11",
+        "type": "mongodb-aleph-config",
+        "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "ASRS",
+        "name": ""
+    },
+    {
+        "id": "28237053282d9860",
+        "type": "gauth",
+        "name": "asrs-logging2@macro-pulsar-412700.iam.gserviceaccount.com"
+    },
+    {
+        "id": "3e5d7ee7119b6b52",
+        "type": "ui_tab",
+        "name": "Pharmacist retrieve meds",
+        "icon": "dashboard",
+        "order": 7,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,689 @@
+[
+    {
+        "id": "15583713aefc7827",
+        "type": "tab",
+        "label": "testing",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "149754882e68baba",
+        "type": "mqtt in",
+        "z": "15583713aefc7827",
+        "name": "",
+        "topic": "testTopic",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "ce684d0833c30503",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 240,
+        "y": 340,
+        "wires": [
+            [
+                "72717ba0444fe312"
+            ]
+        ]
+    },
+    {
+        "id": "72717ba0444fe312",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "47a6b687af7607f5",
+        "type": "mqtt out",
+        "z": "15583713aefc7827",
+        "name": "",
+        "topic": "testTopic",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "ce684d0833c30503",
+        "x": 500,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "61cc182c4fbf0c82",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "testTopic",
+        "payload": "011",
+        "payloadType": "str",
+        "x": 250,
+        "y": 460,
+        "wires": [
+            [
+                "460bd4a1069f97f4"
+            ]
+        ]
+    },
+    {
+        "id": "6650279fbe06c713",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "d14b9307e64ee466",
+        "type": "mongodb-aleph-in",
+        "z": "15583713aefc7827",
+        "mongodb": "8efbd4578f8ecf11",
+        "name": "getMeds",
+        "collection": "Medications",
+        "operation": "find",
+        "x": 480,
+        "y": 900,
+        "wires": [
+            [
+                "6650279fbe06c713"
+            ]
+        ]
+    },
+    {
+        "id": "b6e52f6249e0cd1f",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 1",
+        "func": "\nmsg.find = {};\nmsg.projection = { \"_id\": 0, \"_location\": 1 };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 760,
+        "wires": [
+            [
+                "9f8d729891e248e8"
+            ]
+        ]
+    },
+    {
+        "id": "fb01d198eb7aa26f",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 660,
+        "wires": [
+            [
+                "b6e52f6249e0cd1f"
+            ]
+        ]
+    },
+    {
+        "id": "6b369b6c96b38904",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 2",
+        "func": "msg.payload = msg.payload || {};\nswitch(msg.payload) {\n    case \"load\":\n        msg.template = \"load_template\";\n        break;\n    case \"history\":\n        msg.template = \"history_template\";\n        break;\n    case \"check\":\n        msg.template = \"check_template\";\n        break;\n    default:\n        msg.template = \"default_template\";\n}\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 1140,
+        "wires": [
+            [
+                "62632c1864562600"
+            ]
+        ]
+    },
+    {
+        "id": "23979b9165531bce",
+        "type": "http in",
+        "z": "15583713aefc7827",
+        "name": "",
+        "url": "/test2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 610,
+        "y": 1140,
+        "wires": [
+            [
+                "c48aa97b90db3b78"
+            ]
+        ]
+    },
+    {
+        "id": "57740e7682363512",
+        "type": "ui_template",
+        "z": "15583713aefc7827",
+        "group": "",
+        "name": "history log ",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "format": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Dynamic Table Example</title>\n<style>\n    table {\n        width: 100%;\n        border-collapse: collapse;\n    }\n    th, td {\n        border: 1px solid #ddd;\n        padding: 8px;\n        text-align: left;\n    }\n    th {\n        background-color: #f2f2f2;\n    }\n</style>\n</head>\n<body>\n\n<table id=\"myTable\">\n    <thead>\n        <tr>\n            <th>User ID</th>\n            <th>Date and Time</th>\n            <th>Action</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <td>1</td>\n            <td>2024-05-10 08:30 AM</td>\n            <td>Edit</td>\n        </tr>\n        <tr>\n            <td>2</td>\n            <td>2024-05-11 03:45 PM</td>\n            <td>Delete</td>\n        </tr>\n        <!-- Existing rows -->\n    </tbody>\n</table>\n\n<button onclick=\"addRow()\">Add Row</button>\n\n<script>\n    async function fetchUserData() {\n        // Simulate a call to the database or backend API\n        // Replace this with your actual database call\n        return {\n            userId: 3, // Replace with actual user ID from the database\n            action: \"View\" // Replace with actual action from the database\n        };\n    }\n\n    async function addRow() {\n        var userData = await fetchUserData();\n        var table = document.getElementById(\"myTable\").getElementsByTagName('tbody')[0];\n        var newRow = table.insertRow(table.rows.length);\n\n        var cell1 = newRow.insertCell(0);\n        var cell2 = newRow.insertCell(1);\n        var cell3 = newRow.insertCell(2);\n\n        cell1.innerHTML = userData.userId; // User ID from the database\n        cell2.innerHTML = new Date().toLocaleString(); // Current date and time\n        cell3.innerHTML = userData.action; // Action from the database\n    }\n</script>\n\n</body>\n</html>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1290,
+        "y": 1160,
+        "wires": [
+            [
+                "20eb824abba738f9"
+            ]
+        ]
+    },
+    {
+        "id": "c48aa97b90db3b78",
+        "type": "template",
+        "z": "15583713aefc7827",
+        "name": "main menu",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Menu Page</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            display: flex;\n            flex-direction: column;\n            align-items: center;\n            margin: 0;\n            padding: 0;\n        }\n\n        .menu-title {\n            margin-top: 50px;\n            font-size: 48px;\n            margin-bottom: 30px;\n            color: #333;\n        }\n\n        .menu-button {\n            background-color: #4CAF50;\n            color: #ffffff;\n            padding: 15px 30px;\n            border: none;\n            border-radius: 5px;\n            cursor: pointer;\n            margin-bottom: 20px;\n            font-size: 24px;\n            transition: background-color 0.3s ease;\n        }\n\n        .menu-button:hover {\n            background-color: #3e8e41;\n        }\n    </style>\n</head>\n<body>\n    <h1 class=\"menu-title\">Menu Page</h1>\n    <button class=\"menu-button\" onclick=\"sendPayload('load')\">load&retrieve medication</button>\n    <button class=\"menu-button\" onclick=\"sendPayload('history')\">Medication database</button>\n    <button class=\"menu-button\" onclick=\"sendPayload('check')\">history log</button>\n\n    <script>\n        function sendPayload(payload) {\n            var msg = { payload: payload };\n            RED.comms.publish(\"input\", msg);\n        }\n    </script>\n</body>\n</html>\n",
+        "output": "str",
+        "x": 790,
+        "y": 1140,
+        "wires": [
+            [
+                "6b369b6c96b38904"
+            ]
+        ]
+    },
+    {
+        "id": "62632c1864562600",
+        "type": "switch",
+        "z": "15583713aefc7827",
+        "name": "",
+        "property": "template",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "load",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "history",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "check",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 1090,
+        "y": 1140,
+        "wires": [
+            [],
+            [],
+            [
+                "57740e7682363512"
+            ]
+        ]
+    },
+    {
+        "id": "20eb824abba738f9",
+        "type": "http response",
+        "z": "15583713aefc7827",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1490,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "d45bb08287c9d0a0",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 4",
+        "func": "\nmsg.find = { _name : \"Phentanyl\" };\nmsg.projection = { \"_id\": 0, \"_location\": 1 };\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 960,
+        "wires": [
+            [
+                "d14b9307e64ee466"
+            ]
+        ]
+    },
+    {
+        "id": "f0d7f232b83aba11",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 860,
+        "wires": [
+            [
+                "d45bb08287c9d0a0"
+            ]
+        ]
+    },
+    {
+        "id": "9f8d729891e248e8",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "460bd4a1069f97f4",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "2b455c7b6fe81eba",
+        "type": "loop",
+        "z": "15583713aefc7827",
+        "name": "",
+        "kind": "enum",
+        "count": "",
+        "initial": "1",
+        "step": "1",
+        "condition": "msg.payload !== 0",
+        "conditionType": "js",
+        "when": "before",
+        "enumeration": "payload",
+        "enumerationType": "msg",
+        "limit": "",
+        "loopPayload": "loop-val",
+        "finalPayload": "final-last",
+        "x": 890,
+        "y": 320,
+        "wires": [
+            [
+                "60c4795a1b867e87"
+            ],
+            [
+                "cf325c0cb122e449"
+            ]
+        ]
+    },
+    {
+        "id": "799893c628131696",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 5",
+        "func": "\nmsg.payload = [1, 2, 3];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "2b455c7b6fe81eba"
+            ]
+        ]
+    },
+    {
+        "id": "9dad7fc0c0b9a1e4",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "799893c628131696"
+            ]
+        ]
+    },
+    {
+        "id": "cf325c0cb122e449",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 6",
+        "func": "// Extract the value content from the message object\nlet value = msg.loop.value;\n\n// Construct two separate messages\nlet message1 = { ...msg }; // Original message\nlet message2 = { payload: value }; // Message containing the extracted value content\n\n// Output an array containing both messages\nreturn [message1, message2];",
+        "outputs": 2,
+        "timeout": "5",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 420,
+        "wires": [
+            [
+                "2b455c7b6fe81eba"
+            ],
+            [
+                "c0d69abc325281bd"
+            ]
+        ]
+    },
+    {
+        "id": "60c4795a1b867e87",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "baf8e6f73fa652f2",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 8",
+        "func": "// Extract the value from the message object\nlet value = msg.loop.value;\n\n// Output the value\nnode.warn(value);\n\n// Return the value\nreturn [value, msg]\n",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c0d69abc325281bd",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c8503c43cfe29dfc",
+        "type": "GSheet",
+        "z": "15583713aefc7827",
+        "creds": "28237053282d9860",
+        "method": "append",
+        "action": "",
+        "sheet": "1WkyWxkbuhL3Y5ejC7HBdERlSD0XdCCEOgDbQu81csgA",
+        "cells": "Sheet1!A2:E1000",
+        "flatten": false,
+        "name": "",
+        "x": 490,
+        "y": 1360,
+        "wires": [
+            [
+                "4308befd4a836589"
+            ]
+        ]
+    },
+    {
+        "id": "7e5e1993a7178640",
+        "type": "inject",
+        "z": "15583713aefc7827",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 1360,
+        "wires": [
+            [
+                "33987ba99e1a29aa",
+                "8f736b6293123ccc"
+            ]
+        ]
+    },
+    {
+        "id": "4308befd4a836589",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "33987ba99e1a29aa",
+        "type": "function",
+        "z": "15583713aefc7827",
+        "name": "function 9",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 1460,
+        "wires": [
+            [
+                "c8503c43cfe29dfc"
+            ]
+        ]
+    },
+    {
+        "id": "8f736b6293123ccc",
+        "type": "debug",
+        "z": "15583713aefc7827",
+        "name": "debug 16",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "ce684d0833c30503",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Artyom's ASRS broker",
+        "broker": "06ea4fbd57d348d0931b9543624acafa.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "9be72af31adee06c",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8efbd4578f8ecf11",
+        "type": "mongodb-aleph-config",
+        "hostname": "Nodered:LQmpKU4C0DX9cVay@cluster0.1cnydcd.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "ASRS",
+        "name": ""
+    },
+    {
+        "id": "28237053282d9860",
+        "type": "gauth",
+        "name": "asrs-logging2@macro-pulsar-412700.iam.gserviceaccount.com"
+    },
+    {
+        "id": "9be72af31adee06c",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "isrgrootx1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]

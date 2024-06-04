@@ -2,7 +2,7 @@
     {
         "id": "e6fc873145b0a448",
         "type": "tab",
-        "label": "loader",
+        "label": "Pharmacist load",
         "disabled": false,
         "info": "",
         "env": []
@@ -19,8 +19,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 740,
+        "x": 790,
+        "y": 800,
         "wires": [
             [
                 "6e611c535a045cfb"
@@ -38,11 +38,11 @@
         "upsert": false,
         "multi": false,
         "operation": "insert",
-        "x": 1050,
-        "y": 740,
+        "x": 1130,
+        "y": 800,
         "wires": [
             [
-                "aa6f4a563854c447"
+                "2fa9d7b3f2d40ae1"
             ]
         ]
     },
@@ -67,7 +67,7 @@
         "step": 1,
         "className": "",
         "x": 100,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -120,11 +120,6 @@
                 "type": "str"
             },
             {
-                "label": "Paracetamol",
-                "value": "Paracetamol",
-                "type": "str"
-            },
-            {
                 "label": "Ibuprofen",
                 "value": "Ibuprofen",
                 "type": "str"
@@ -150,7 +145,7 @@
         "topicType": "msg",
         "className": "",
         "x": 120,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "43c651aeb5a1601a"
@@ -169,8 +164,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 440,
+        "x": 420,
+        "y": 460,
         "wires": [
             []
         ]
@@ -195,7 +190,7 @@
         "topic": "",
         "topicType": "str",
         "x": 100,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
                 "406acdd260635eb1"
@@ -214,8 +209,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 380,
-        "y": 500,
+        "x": 460,
+        "y": 520,
         "wires": [
             [
                 "44150b37bbe931d2"
@@ -227,15 +222,15 @@
         "type": "function",
         "z": "e6fc873145b0a448",
         "name": "decide where to put meds",
-        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.filter(loc => loc.Location).map(loc => loc.Location);\nlet existingLocationsSet = new Set(existingLocations);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the range limits\nconst xRange = 1000;\nconst yRange = 1000;\n\n// Determine locations for the boxes\nlet boxLocations = [];\n\nouterLoop:\nfor (let x = 1; x <= xRange; x++) {\n    for (let y = 1; y <= yRange; y++) {\n        let location = `${x}, ${y}`;\n        if (!existingLocationsSet.has(location)) {\n            boxLocations.push(location);\n            if (boxLocations.length >= amount) {\n                break outerLoop;\n            }\n        }\n    }\n}\n\n// Set the box locations in the message payload\nflow.set('locations', boxLocations);\nmsg.payload = boxLocations;\nreturn msg;\n",
+        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.filter(loc => loc.Location).map(loc => loc.Location);\nlet existingLocationsSet = new Set(existingLocations);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the range limits\nconst xRange = 1000;\nconst yRange = 1000;\n\n// Determine locations for the boxes\nlet boxLocations = [];\n\nouterLoop:\nfor (let x = 1; x <= xRange; x++) {\n    for (let y = 1; y <= yRange; y++) {\n        let location = `${x}, ${y}`;\n        if (!existingLocationsSet.has(location)) {\n            boxLocations.push(location);\n            if (boxLocations.length >= amount) {\n                break outerLoop;\n            }\n        }\n    }\n}\n\n// Set the box locations in the message payload\nflow.set('locations', boxLocations);\nflow.set('action', 'load');\nmsg.payload = boxLocations;\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
-        "y": 560,
+        "x": 450,
+        "y": 620,
         "wires": [
             [
                 "644d0c3d6e0e33ed"
@@ -255,8 +250,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 1140,
-        "y": 620,
+        "x": 1220,
+        "y": 680,
         "wires": [
             [
                 "3b0cbfea68a8a4f5"
@@ -277,8 +272,8 @@
         "correl": "",
         "expiry": "",
         "broker": "ce684d0833c30503",
-        "x": 1000,
-        "y": 620,
+        "x": 1080,
+        "y": 680,
         "wires": []
     },
     {
@@ -287,29 +282,8 @@
         "z": "e6fc873145b0a448",
         "name": "important!",
         "info": "we store input into context variables, \nso we don't need to connect this function to anything",
-        "x": 480,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "98e9b415f5570edb",
-        "type": "ui_text",
-        "z": "e6fc873145b0a448",
-        "group": "7bec1ed418fad541",
-        "order": 8,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Pharmacist menu description",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "style": false,
-        "font": "",
-        "fontSize": 16,
-        "color": "#000000",
-        "x": 160,
-        "y": 120,
+        "x": 560,
+        "y": 460,
         "wires": []
     },
     {
@@ -327,8 +301,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 490,
-        "y": 120,
+        "x": 430,
+        "y": 200,
         "wires": [
             []
         ]
@@ -340,7 +314,7 @@
         "name": "Pharmacist loads meds gui",
         "info": "",
         "x": 150,
-        "y": 340,
+        "y": 380,
         "wires": []
     },
     {
@@ -350,7 +324,7 @@
         "name": "Pharmacist main menu gui",
         "info": "",
         "x": 150,
-        "y": 80,
+        "y": 160,
         "wires": []
     },
     {
@@ -362,14 +336,14 @@
         "order": 2,
         "width": 0,
         "height": 0,
-        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=zBDDOfDknqT46cbtAAFh';\" style=\"height:44px;line-height:44px\">Load Medications</button>\n",
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/2?socketid=zBDDOfDknqT46cbtAAFh';\" style=\"height:44px;line-height:44px\">Load/Retrieve Medications</button>\n",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
         "x": 170,
-        "y": 160,
+        "y": 200,
         "wires": [
             []
         ]
@@ -378,10 +352,10 @@
         "id": "7eff2d78e90c1a67",
         "type": "comment",
         "z": "e6fc873145b0a448",
-        "name": "load or retrieve?",
+        "name": "Pharmacist load or retrieve?",
         "info": "",
-        "x": 480,
-        "y": 80,
+        "x": 460,
+        "y": 160,
         "wires": []
     },
     {
@@ -399,8 +373,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 500,
-        "y": 160,
+        "x": 440,
+        "y": 240,
         "wires": [
             []
         ]
@@ -421,7 +395,7 @@
         "templateScope": "local",
         "className": "",
         "x": 150,
-        "y": 200,
+        "y": 240,
         "wires": [
             []
         ]
@@ -442,7 +416,7 @@
         "templateScope": "local",
         "className": "",
         "x": 150,
-        "y": 240,
+        "y": 280,
         "wires": [
             []
         ]
@@ -455,11 +429,11 @@
         "name": "get locations",
         "collection": "Medications",
         "operation": "find",
-        "x": 1010,
-        "y": 500,
+        "x": 1090,
+        "y": 520,
         "wires": [
             [
-                "f9b0adcab224b4ce"
+                "bfe274b4c7e0c239"
             ]
         ]
     },
@@ -480,8 +454,8 @@
         "limit": "",
         "loopPayload": "loop-val",
         "finalPayload": "final-count",
-        "x": 620,
-        "y": 560,
+        "x": 700,
+        "y": 620,
         "wires": [
             [],
             [
@@ -501,8 +475,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 620,
+        "x": 700,
+        "y": 680,
         "wires": [
             [
                 "644d0c3d6e0e33ed"
@@ -529,8 +503,8 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 890,
-        "y": 120,
+        "x": 750,
+        "y": 200,
         "wires": []
     },
     {
@@ -548,8 +522,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 810,
-        "y": 160,
+        "x": 670,
+        "y": 240,
         "wires": [
             []
         ]
@@ -560,8 +534,8 @@
         "z": "e6fc873145b0a448",
         "name": "Pharmacist loaded meds confirmation",
         "info": "Medications loaded",
-        "x": 870,
-        "y": 80,
+        "x": 730,
+        "y": 160,
         "wires": []
     },
     {
@@ -571,7 +545,7 @@
         "name": "",
         "events": "all",
         "x": 100,
-        "y": 840,
+        "y": 940,
         "wires": [
             []
         ]
@@ -595,8 +569,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 360,
-        "y": 840,
+        "x": 440,
+        "y": 940,
         "wires": [
             [
                 "4ec140838b7a0806"
@@ -621,7 +595,7 @@
         "fontSize": 16,
         "color": "#000000",
         "x": 170,
-        "y": 380,
+        "y": 420,
         "wires": []
     },
     {
@@ -636,8 +610,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 500,
-        "y": 680,
+        "x": 580,
+        "y": 740,
         "wires": [
             [
                 "7a6e4822cefc7db2"
@@ -656,8 +630,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 740,
+        "x": 500,
+        "y": 800,
         "wires": [
             [
                 "9aa5b9070aee3f3e"
@@ -670,8 +644,8 @@
         "z": "e6fc873145b0a448",
         "name": "returns",
         "info": "5/29/2024, 11:57:07 AMnode: debug 14\ntestTopic : msg.payload : Object\nobject\nmedication: \"OxyContin\"\nlevel: \"High\"\nlocation: \"1, 2\"\n\n5/29/2024, 11:57:07 AMnode: debug 14\ntestTopic : msg.payload : Object\nobject\nmedication: \"OxyContin\"\nlevel: \"High\"\nlocation: \"1, 3\"\n\n5/29/2024, 11:57:07 AMnode: debug 14\ntestTopic : msg.payload : Object\nobject\nmedication: \"OxyContin\"\nlevel: \"High\"\nlocation: \"1, 4\"",
-        "x": 330,
-        "y": 780,
+        "x": 410,
+        "y": 840,
         "wires": []
     },
     {
@@ -680,8 +654,8 @@
         "z": "e6fc873145b0a448",
         "name": "returns",
         "info": "5/29/2024, 12:20:15 PMnode: debug 14\ntestTopic : msg : Object\nobject\ntopic: \"testTopic\"\npayload: object\nMedication: \"Fentanyl\"\nLevel: \"High\"\nLocation: \"1, 7\"\nqos: 0\nretain: false\n_msgid: \"f2ae2bb51fd27e96\"\noperation: \"insert\"",
-        "x": 660,
-        "y": 780,
+        "x": 740,
+        "y": 840,
         "wires": []
     },
     {
@@ -690,8 +664,8 @@
         "z": "e6fc873145b0a448",
         "name": "returns",
         "info": "5/29/2024, 12:06:05 PMnode: Load Confirmation\ntestTopic : msg.payload : Object\nobject\nMedication: \"Paracetamol\"\nLevel: undefined\nLocation: \"1, 3\"\n_id: \"66569495864aa24257ee4142\"",
-        "x": 1070,
-        "y": 780,
+        "x": 1150,
+        "y": 840,
         "wires": []
     },
     {
@@ -700,9 +674,298 @@
         "z": "e6fc873145b0a448",
         "name": "redirect to main menu",
         "info": "",
-        "x": 380,
-        "y": 880,
+        "x": 140,
+        "y": 900,
         "wires": []
+    },
+    {
+        "id": "e6927ba53fc4fc81",
+        "type": "ui_text",
+        "z": "e6fc873145b0a448",
+        "group": "2656c1ed664638c6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Not enough space!",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 670,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2f6f4e617f7f8da9",
+        "type": "ui_template",
+        "z": "e6fc873145b0a448",
+        "group": "2656c1ed664638c6",
+        "name": "Pharmacist menu->",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "format": "<button class=\"md-raised nr-dashboard-form-button md-button md-ink-ripple\" onclick=\"window.location.href='http://34.151.86.177/ui/#!/0?socketid=lgx8S6uDQG5pfnQSAAGh';\" style=\"height:44px;line-height:44px\">back to the main menu</button>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 670,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8e83c4296f83654",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist loaded meds not enough space warning",
+        "info": "We don't have enough storage. \nHere is how much storage we still have:",
+        "x": 770,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "86497f28e3a5b14d",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "returns",
+        "info": "5/29/2024, 12:43:25 PMnode: debug 14\nmsg : Object\nobject\npayload: array[3]\n0: object\nLocation: \"1, 1\"\n1: object\nLocation: \"1, 2\"\n2: object\nLocation: \"1, 3\"\nevent: object\nclientX: 344\nclientY: 246\nbbox: array[4]\nsocketid: \"5y9dd5Dw5qEHFkyzAAKK\"\n_msgid: \"064c41e946ccd199\"\noperation: \"find\"",
+        "x": 1070,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "bfe274b4c7e0c239",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "enough space?",
+        "func": "// Retrieve the existing locations from the MongoDB response\nlet existingLocations = msg.payload.map(entry => entry.Location);\n\n// Retrieve the amount from flow context\nlet amount = flow.get('amount');\n\n// Define the maximum capacity\nconst maxCapacity = 1000;\n\n// Calculate the remaining capacity\nconst remainingCapacity = maxCapacity - existingLocations.length;\n\nif (amount <= remainingCapacity) {\n    return msg; // Enough space, forward the input without any changes\n} else {\n    // Not enough space, send 1 to the second output\n    return [null, { payload: 1 }];\n}\n",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 560,
+        "wires": [
+            [
+                "f9b0adcab224b4ce"
+            ],
+            [
+                "768555f1de127976"
+            ]
+        ]
+    },
+    {
+        "id": "135bcf56711896db",
+        "type": "ui_ui_control",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "events": "all",
+        "x": 100,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "768555f1de127976",
+        "type": "change",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"tab\":\"Pharmacist loaded meds confirmation\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 560,
+        "wires": [
+            [
+                "135bcf56711896db"
+            ]
+        ]
+    },
+    {
+        "id": "3ad8b2f03dbefb38",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "redirect to capacity warning screen",
+        "info": "",
+        "x": 160,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "5c87ebd314621eb9",
+        "type": "GSheet",
+        "z": "e6fc873145b0a448",
+        "creds": "28237053282d9860",
+        "method": "append",
+        "action": "",
+        "sheet": "1WkyWxkbuhL3Y5ejC7HBdERlSD0XdCCEOgDbQu81csgA",
+        "cells": "Sheet1!A2:E1000",
+        "flatten": false,
+        "name": "history file",
+        "x": 1080,
+        "y": 880,
+        "wires": [
+            [
+                "109c9bf2c1fac276"
+            ]
+        ]
+    },
+    {
+        "id": "2fa9d7b3f2d40ae1",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "write log",
+        "func": "\nvar action = flow.get('action');\nvar medication = flow.get('medication');\nvar amount = flow.get('amount');\n\n// Get the current date and time\nvar currentDateTime = new Date().toLocaleString();\n\n// Initialize the result array with the current date/time, user, and action\nvar result = [currentDateTime, medication, action];\n\n// Return the result array\nmsg.payload = result;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 880,
+        "wires": [
+            [
+                "5c87ebd314621eb9"
+            ]
+        ]
+    },
+    {
+        "id": "aa59df81c18738c1",
+        "type": "http in",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "url": "/logUser",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1490,
+        "y": 240,
+        "wires": [
+            [
+                "40f2b82fbd3429c3",
+                "db1e9c5665515ff8"
+            ]
+        ]
+    },
+    {
+        "id": "40f2b82fbd3429c3",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "who is it? ",
+        "func": "// Define the function\nvar extractUsername = function (msg) {\n    // Extract username from the request URL\n    var url = msg.req.url;\n    var username = \"\";\n\n    // Check if the URL contains the username query parameter\n    if (url.includes(\"username=\")) {\n        // Split the URL by '?' to get the query parameters\n        var queryParams = url.split(\"?\")[1];\n        // Split the query parameters by '&' to get individual key-value pairs\n        var keyValuePairs = queryParams.split(\"&\");\n\n        // Iterate through the key-value pairs to find the username\n        for (var i = 0; i < keyValuePairs.length; i++) {\n            var pair = keyValuePairs[i].split(\"=\");\n            if (pair[0] === \"username\") {\n                // Found the username key, set the username value\n                username = pair[1];\n                break;\n            }\n        }\n    }\n\n    // Set the extracted username to the message payload\n    msg.payload = username;\n\n    // Return the modified message\n    return msg;\n}\n\n// Export the function\nmodule.exports = extractUsername;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1660,
+        "y": 240,
+        "wires": [
+            [
+                "7e31950868ae13da"
+            ]
+        ]
+    },
+    {
+        "id": "7e31950868ae13da",
+        "type": "http response",
+        "z": "e6fc873145b0a448",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1820,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "714d83448be78fd3",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "record user & redirect to Pharmacist menu",
+        "info": "",
+        "x": 2040,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "143351b41dc965fb",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "Pharmacist load meds",
+        "info": "",
+        "x": 1790,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "db1e9c5665515ff8",
+        "type": "debug",
+        "z": "e6fc873145b0a448",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1620,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "adde28466ac417dd",
+        "type": "comment",
+        "z": "e6fc873145b0a448",
+        "name": "note",
+        "info": "this one is supposed to receive login information from the authenticating app, buit we are having issues with this",
+        "x": 1580,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "109c9bf2c1fac276",
+        "type": "function",
+        "z": "e6fc873145b0a448",
+        "name": "reset variables",
+        "func": "flow.set('amount', 0);\nflow.set('medication', \"\");\nflow.set('action', \"\");\nflow.set('location', [])\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 940,
+        "wires": [
+            [
+                "aa6f4a563854c447"
+            ]
+        ]
     },
     {
         "id": "8efbd4578f8ecf11",
@@ -758,10 +1021,10 @@
         "sessionExpiry": ""
     },
     {
-        "id": "7bec1ed418fad541",
+        "id": "bd2027dddef41de4",
         "type": "ui_group",
-        "name": "Pharmacist main menu",
-        "tab": "57b8334d92a7b6b7",
+        "name": "p l/r group",
+        "tab": "c74ca39032f59d25",
         "order": 1,
         "disp": true,
         "width": "6",
@@ -769,10 +1032,10 @@
         "className": ""
     },
     {
-        "id": "bd2027dddef41de4",
+        "id": "7bec1ed418fad541",
         "type": "ui_group",
-        "name": "p l/r group",
-        "tab": "c74ca39032f59d25",
+        "name": "Pharmacist main menu",
+        "tab": "57b8334d92a7b6b7",
         "order": 1,
         "disp": true,
         "width": "6",
@@ -789,11 +1052,25 @@
         "width": 6
     },
     {
+        "id": "2656c1ed664638c6",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "b492d3f9be4c8809",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "28237053282d9860",
+        "type": "gauth",
+        "name": "asrs-logging2@macro-pulsar-412700.iam.gserviceaccount.com"
+    },
+    {
         "id": "91da677bce3bf414",
         "type": "ui_tab",
         "name": "Pharmacist load meds",
         "icon": "dashboard",
-        "order": 2,
+        "order": 3,
         "disabled": false,
         "hidden": false
     },
@@ -812,6 +1089,15 @@
         "alpnprotocol": ""
     },
     {
+        "id": "c74ca39032f59d25",
+        "type": "ui_tab",
+        "name": "Pharmacist load or retrieve?",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "57b8334d92a7b6b7",
         "type": "ui_tab",
         "name": "Pharmacist main menu",
@@ -821,20 +1107,20 @@
         "hidden": false
     },
     {
-        "id": "c74ca39032f59d25",
-        "type": "ui_tab",
-        "name": "Pharmacist load or retrieve?",
-        "icon": "dashboard",
-        "order": 3,
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "e0b3a0cd5f8f3298",
         "type": "ui_tab",
         "name": "Pharmacist loaded meds confirmation",
         "icon": "dashboard",
-        "order": 6,
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b492d3f9be4c8809",
+        "type": "ui_tab",
+        "name": "Phrmacist loded meds not enough space",
+        "icon": "dashboard",
+        "order": 5,
         "disabled": false,
         "hidden": false
     }
