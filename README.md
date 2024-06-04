@@ -12,7 +12,7 @@ Contributors: Mauro Turci, Alexandria Foss, Het Patel, Danil Sayus, Ajay Kishan,
 
 The project aims to model Automated Storage and Retrieval System in a pharmacy. The solution controls access and sorting of medications using web dashboard and a robot.
 
-For more in-depth overview visit our [Wiki](https://github.com/Artyom-kurguzkin/CC-ASRS/wiki)
+For more in-depth overview and guidance how to build it visit our [Wiki](https://github.com/Artyom-kurguzkin/CC-ASRS/wiki)
 
 For more info about how we fare through the project, you can see our [project board](https://github.com/users/Artyom-kurguzkin/projects/1/views/2)
 
