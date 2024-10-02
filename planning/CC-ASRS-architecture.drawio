@@ -1,11 +1,11 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36" version="24.7.16">
   <diagram name="Page-1" id="SYwFpmESqybX0uCg1Dp3">
-    <mxGraphModel dx="1432" dy="844" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2074" dy="1267" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="0EYpAPecGEJwFadYT3Qb-23" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="520" y="278" width="672" height="361" as="geometry" />
+          <mxGeometry x="520" y="278" width="672" height="342" as="geometry" />
         </mxCell>
         <mxCell id="0EYpAPecGEJwFadYT3Qb-24" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#b85450;fillColor=#f8cecc;" vertex="1" parent="1">
           <mxGeometry x="727" y="422" width="426" height="155" as="geometry" />
@@ -182,7 +182,7 @@
           <mxGeometry x="929" y="348" width="180" height="20" as="geometry" />
         </mxCell>
         <mxCell id="XFF4y8vnrjnA9_jUFiSj-93" value="Google Cloud" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="518" y="282.8" width="110" height="30" as="geometry" />
+          <mxGeometry x="530" y="284" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="XFF4y8vnrjnA9_jUFiSj-95" value="User accessing web interfaces through public URL" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="425" y="77.61999999999999" width="110" height="30" as="geometry" />
@@ -222,7 +222,7 @@
           <mxGeometry x="552.86" y="163.71" width="36.29" height="36.29" as="geometry" />
         </mxCell>
         <mxCell id="0EYpAPecGEJwFadYT3Qb-8" value="Nodered hosted in GKE pod" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="730" y="585" width="194" height="30" as="geometry" />
+          <mxGeometry x="731" y="581" width="194" height="30" as="geometry" />
         </mxCell>
         <mxCell id="0EYpAPecGEJwFadYT3Qb-9" value="" style="strokeColor=#dddddd;shadow=1;strokeWidth=1;rounded=1;absoluteArcSize=1;arcSize=2;" vertex="1" parent="1">
           <mxGeometry x="642" y="326.5" width="95" height="57" as="geometry" />
