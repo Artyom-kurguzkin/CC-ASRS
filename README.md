@@ -17,6 +17,13 @@ The project aims to model Automated Storage and Retrieval System in a pharmacy. 
 [How to build the project pieces](https://github.com/Artyom-kurguzkin/CC-ASRS/wiki)
 
 
+* Robot folder contains the wiring diagram for the robot, source code, and Wokwi project file that can be imported to replicate the wiring layout. 
+
+* nodered contains config files that can be imported in Nodered to replicate the flows used.
+
+* login-redirect contains source code for Firebase cloud functions that are responsible for authenticating users and redirecting them to crrect GUIs.
+
+* planning contains draw.io file with the most recent architectural diagram. 
 
 <br>
 
@@ -32,4 +39,6 @@ The project aims to model Automated Storage and Retrieval System in a pharmacy. 
 * Only Administrators and Pharmacists can do everything they want with medications. Staff members can only see allowed medications. Staff members cannot see retrieval-loading history.
 
 <br>
+
+
 
