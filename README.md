@@ -40,5 +40,9 @@ The project aims to model Automated Storage and Retrieval System in a pharmacy. 
 
 <br>
 
+# Demo
+
+https://github.com/user-attachments/assets/be6b6cc2-4155-4d3b-9919-b56bcb925792
+
 
 
