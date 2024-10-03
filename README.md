@@ -10,7 +10,7 @@ Contributors: Mauro Turci, Alexandria Foss, Het Patel, Danil Sayus, Ajay Kishan,
 
 <br>
 
-The project aims to model Automated Storage and Retrieval System in a pharmacy. The solution controls access and sorting of medications using web dashboard and a robot.
+The project aims to model Automated Storage and Retrieval System in a pharmacy. The solution controls access and sorting of medications using web dashboard and a robot. The initial inspiration came from this video: https://www.youtube.com/watch?v=Br6ByVtJb9o 
 
 [Architecture overview](https://github.com/Artyom-kurguzkin/CC-ASRS/wiki/Architecture-overview)
 
