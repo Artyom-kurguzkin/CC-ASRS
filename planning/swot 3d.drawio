@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="25.0.3">
+  <diagram name="Page-1" id="bT62z_F3vIpz3gsCmOOK">
+    <mxGraphModel dx="1430" dy="855" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="a2QYtNLT3LYSnD4IBYQx-9" value="&lt;b&gt;Strengths&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Establishing their own CAD and 3d printing capabilities makes Novita less dependent on 3rd party providers&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Novita Services R&amp;amp;D department has experts with body of knowledge in CAD, 3d printing, and academic research&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Novita Services has body of knowledge, expertise, and capability in traditional orthotics manufacturing, making them the perfect candidate to explore new frontiers; they can compare new methods with what they are doing already&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="104" y="232" width="293" height="318" as="geometry" />
+        </mxCell>
+        <mxCell id="a2QYtNLT3LYSnD4IBYQx-10" value="&lt;b&gt;Opportunities&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Cheaper higher quality manufacturing of orthotics devices will grant Novita Services competitive advantage&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Mastering additive manufacturing could potentially lead to other new product offerings in the future&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="104" y="560" width="293" height="318" as="geometry" />
+        </mxCell>
+        <mxCell id="a2QYtNLT3LYSnD4IBYQx-12" value="&lt;b&gt;Weaknesses&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;The new proposed method involves considerable technical proficiency with modern technologies. Considerable investment in staff training may be required in the future&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="405" y="231" width="292" height="319" as="geometry" />
+        </mxCell>
+        <mxCell id="a2QYtNLT3LYSnD4IBYQx-13" value="&lt;b&gt;Threats&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Additive manufacturing is a relatively new method. Many difficulties related to it may still be unknown to us&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Pursuing this project requires considerable initial investment&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Since 3d printing is a new technology, it is likely that our current devices and software will become obsolete relatively quickly&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="405" y="560" width="293" height="319" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
